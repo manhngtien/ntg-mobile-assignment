@@ -154,6 +154,108 @@ const options = {
             data: { type: "object" },
           },
         },
+        OrderItem: {
+          type: "object",
+          required: ["productId", "quantity", "price"],
+          properties: {
+            productId: { type: "integer", example: 1 },
+            quantity: { type: "integer", example: 2 },
+            price: { type: "number", example: 99.99 },
+          },
+        },
+        Order: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            userId: { type: "integer", example: 3 },
+            items: {
+              type: "array",
+              items: { $ref: "#/components/schemas/OrderItem" },
+            },
+            totalAmount: { type: "number", example: 199.98 },
+            shippingAddress: {
+              type: "string",
+              example: "123 Main St, New York, NY 10001",
+            },
+            paymentMethod: {
+              type: "string",
+              enum: ["credit_card", "debit_card", "paypal", "cash_on_delivery"],
+              example: "credit_card",
+            },
+            status: {
+              type: "string",
+              enum: [
+                "pending",
+                "processing",
+                "shipped",
+                "delivered",
+                "cancelled",
+              ],
+              example: "pending",
+            },
+          },
+        },
+        CreateOrderPayload: {
+          type: "object",
+          required: [
+            "items",
+            "totalAmount",
+            "shippingAddress",
+            "paymentMethod",
+          ],
+          properties: {
+            items: {
+              type: "array",
+              minItems: 1,
+              items: { $ref: "#/components/schemas/OrderItem" },
+            },
+            totalAmount: { type: "number", example: 199.98 },
+            shippingAddress: {
+              type: "string",
+              example: "123 Main St, New York, NY 10001",
+            },
+            paymentMethod: {
+              type: "string",
+              enum: ["credit_card", "debit_card", "paypal", "cash_on_delivery"],
+              example: "credit_card",
+            },
+          },
+        },
+        UpdateOrderStatusPayload: {
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: {
+              type: "string",
+              enum: [
+                "pending",
+                "processing",
+                "shipped",
+                "delivered",
+                "cancelled",
+              ],
+              example: "processing",
+            },
+          },
+        },
+        ProductReview: {
+          type: "object",
+          properties: {
+            id: { type: "integer", example: 1 },
+            productId: { type: "integer", example: 3 },
+            userId: { type: "integer", example: 7 },
+            rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+            message: { type: "string", example: "Great product!" },
+          },
+        },
+        CreateReviewPayload: {
+          type: "object",
+          required: ["rating", "message"],
+          properties: {
+            rating: { type: "integer", minimum: 1, maximum: 5, example: 5 },
+            message: { type: "string", example: "Great product!" },
+          },
+        },
       },
     },
   },
@@ -161,6 +263,7 @@ const options = {
     "./authorization/routes.js",
     "./products/routes.js",
     "./users/routes.js",
+    "./orders/routes.js",
   ],
 };
 
