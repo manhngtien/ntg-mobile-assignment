@@ -35,15 +35,15 @@ const AppContent: React.FC = () => {
           component={ListScreen}
           options={{ title: 'List Screen' }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Main"
           component={MainNavigator}
           options={{ title: 'ReactNativeStater' }}
-        />
+        /> */}
         <Stack.Screen
           name="SignIn"
           component={SignInScreen}
-          options={{ title: 'SignIn Screen' }}
+          options={{ headerShown: false }}
         />
         {/* <Stack.Screen
           name="Demo"

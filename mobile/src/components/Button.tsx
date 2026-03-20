@@ -1,34 +1,41 @@
 import React from 'react';
-import { StyleSheet, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
+import { theme } from '../styles/theme';
+import { atoms } from '../styles/atoms';
 
-export default function Button({ style, ...props }: any) {
+type IButtonProps = {
+    bg?: string;
+    textColor?: string;
+    style?: ViewStyle | ViewStyle[];
+} & React.ComponentProps<typeof TouchableOpacity>;
+
+export default function Button({ style, bg, textColor, ...props }: IButtonProps) {
     return (
         <TouchableOpacity
-            style={[styles.button, style]}
-            labelStyle={styles.text}
+            style={[
+                atoms.py_3,
+                atoms.rounded_xl,
+                atoms.text_base,
+
+                atoms.justify_center,
+                atoms.items_center,
+                {
+                    backgroundColor: bg ?? theme.colors.cyan,
+                },
+                style
+            ]}
             {...props}
-        />
+        >
+            <Text style={[
+                atoms.font_bold,
+                atoms.text_base,
+                {
+                    color: textColor ?? "#111827",
+                    lineHeight: 24,
+                }]}
+            >
+                {props.children}
+            </Text>
+        </TouchableOpacity>
     );
 }
-
-type IButtonStyles = {
-    button: ViewStyle;
-    text: TextStyle;
-};
-
-const styles = StyleSheet.create<IButtonStyles>({
-    button: {
-        width: '100%',
-        marginVertical: 10,
-        paddingVertical: 10,
-        backgroundColor: '#39B78D',
-        alignItems: 'center',
-        borderRadius: 10,
-    },
-    text: {
-        fontWeight: 'bold',
-        fontSize: 15,
-        lineHeight: 26,
-        color: 'black',
-    },
-});

@@ -1,10 +1,22 @@
 import React from 'react';
 import { View, Text, TextInput as Input, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-export default function TextInput({ errorText, description, ...props }: any) {
+type ITextInputProps = {
+    label?: string;
+    errorText?: string;
+    description?: string;
+} & React.ComponentProps<typeof Input>;
+
+export default function TextInput({
+    label,
+    errorText,
+    description,
+    ...props
+}: ITextInputProps) {
     return (
         <View style={styles.container}>
-            <Input style={styles.input} underlineColor="transparent" {...props} />
+            {label && <Text style={styles.label}>{label}</Text>}
+            <Input style={styles.input} {...props} />
             {description && !errorText ? (
                 <Text style={styles.description}>{description}</Text>
             ) : null}
@@ -14,6 +26,7 @@ export default function TextInput({ errorText, description, ...props }: any) {
 }
 
 type ITexInputStyles = {
+    label: TextStyle;
     container: ViewStyle;
     input: ViewStyle;
     description: TextStyle
@@ -21,16 +34,23 @@ type ITexInputStyles = {
 };
 
 const styles = StyleSheet.create<ITexInputStyles>({
+    label: {
+        fontSize: 14,
+        lineHeight: 20,
+        fontWeight: '500',
+        marginBottom: 4,
+        color: '#374151'
+    },
     container: {
         width: '100%',
-        marginVertical: 12,
     },
     input: {
         backgroundColor: 'white',
-        borderColor: 'gray',
+        borderColor: '#D1D5DB',
         paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: 10,
+        borderWidth: 1,
     },
     description: {
         fontSize: 13,
