@@ -1,7 +1,6 @@
 import { FC, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import Background from "../components/Background"
-import { styles } from "./styles/signin-screen-styles"
 import Logo from "../components/Logo"
 import TextInput from "../components/TextInput"
 import Button from "../components/Button"
@@ -117,7 +116,7 @@ export const SignInScreen: FC<ISignInScreen> = ({ navigation }: any) => {
 								}}
 								style={[atoms.shadow_md]}
 							>
-								<Text>Sign In</Text>
+								Sign In
 							</Button>
 						</YStack>
 

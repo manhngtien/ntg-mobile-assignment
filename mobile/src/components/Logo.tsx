@@ -1,10 +1,9 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { atoms } from '../styles/atoms';
 
 export default function Logo() {
-    // return <Image source={ImageAssets.logo} style={styles.image} />;
     return (
         <View
             style={[
@@ -18,7 +17,9 @@ export default function Logo() {
                 }
             ]}
         >
-            <FontAwesomeFreeSolid name="shopping-bag" size={32} color="#0DF2F2" />;
+            <Text>
+                <FontAwesomeFreeSolid name="shopping-bag" size={32} color="#0DF2F2" />;
+            </Text>
         </View>
     )
 }
