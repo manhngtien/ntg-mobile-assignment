@@ -18,7 +18,7 @@ export default function Logo() {
             ]}
         >
             <Text>
-                <FontAwesomeFreeSolid name="shopping-bag" size={32} color="#0DF2F2" />;
+                <FontAwesomeFreeSolid name="shopping-bag" size={32} color="#0DF2F2" />
             </Text>
         </View>
     )

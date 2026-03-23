@@ -22,7 +22,10 @@ const OrderModel = require("./common/models/Order");
 const ProductReviewModel = require("./common/models/ProductReview");
 
 app.use(morgan("tiny"));
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: true,
+}));
 
 // Middleware that parses the body payloads as JSON to be consumed next set
 // of middlewares and controllers.

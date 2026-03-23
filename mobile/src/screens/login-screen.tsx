@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import Background from "../components/Background"
 import Logo from "../components/Logo"
@@ -11,28 +11,32 @@ import { YStack } from "../components/YStack"
 import { XStack } from "../components/XStack"
 import LoginButton from "../components/LoginButton"
 import CheckBox from "../components/CheckBox"
+import useLogin from "../hooks/use-login"
 
-interface ISignInScreen {
+interface ILogInScreen {
 	navigation: any
 }
 
-export const SignInScreen: FC<ISignInScreen> = ({ navigation }: any) => {
-
+export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 	const [email, setEmail] = useState<ITextInput>({
-		value: 'eve.holt@reqres.in',
+		value: '',
 		error: '',
 	});
 	const [password, setPassword] = useState<ITextInput>({
-		value: 'cityslicka',
+		value: '',
 		error: '',
 	});
 
+	const { user, loading, login } = useLogin();
+
+	useEffect(() => {
+		if (user) {
+			navigation.navigate('Main');
+		}
+	}, [user])
+
 	function onPressSignIn() {
-		console.log('On Press Sign In Button')
-		console.log(email)
-		console.log(password)
-		//TODO Handle calling api with email and password
-		navigation.navigate('Home');
+		login({ username: email.value, password: password.value });
 	}
 
 	return (
@@ -73,30 +77,25 @@ export const SignInScreen: FC<ISignInScreen> = ({ navigation }: any) => {
 						<YStack gap={16}>
 							<TextInput
 								label="Username"
-								placeholder={'Enter your email'}
+								placeholder={'Enter your username'}
 								returnKeyType="next"
 								onChangeText={(text: string) => setEmail({ value: text, error: '' })}
-								// error={!!email.error}
 								errorText={email.error}
 								autoCapitalize="none"
-								autoComplete="email"
-								textContentType="emailAddress"
-								keyboardType="email-address"
+								autoComplete="username"
 							/>
 							<TextInput
 								label="Password"
 								placeholder={'Enter your password'}
 								returnKeyType="done"
 								onChangeText={(text: string) => setPassword({ value: text, error: '' })}
-								// error={!!password.error}
 								errorText={password.error}
+								autoComplete="password"
 								secureTextEntry
 							/>
 
 							<YStack style={[atoms.items_end]}>
-								<TouchableOpacity
-									onPress={() => navigation.replace('ForgotPasswordScreen')}
-								>
+								<TouchableOpacity>
 									<Text style={[atoms.text_sm, atoms.font_medium, { color: theme.colors.cyan }]}>
 										Forgot password?
 									</Text>
@@ -111,6 +110,7 @@ export const SignInScreen: FC<ISignInScreen> = ({ navigation }: any) => {
 							</XStack>
 
 							<Button
+								loading={loading}
 								onPress={() => {
 									onPressSignIn();
 								}}

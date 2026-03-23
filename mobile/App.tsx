@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { DemoScreen } from './src/screens/demo-screen';
 import { ProfileScreen } from './src/screens/profile-screen';
-import { SignInScreen } from './src/screens/signin-screen';
+import { LogInScreen } from './src/screens/login-screen';
 import DemoHooks from './src/screens/demo/demo-hooks';
 import DemoUseContext, { FeatureComponent2 } from './src/screens/demo/demo-usecontext';
 import { AuthProvider } from './src/contexts/auth-context';
@@ -35,15 +35,15 @@ const AppContent: React.FC = () => {
           component={ListScreen}
           options={{ title: 'List Screen' }}
         /> */}
-        {/* <Stack.Screen
+        <Stack.Screen
+          name="LogIn"
+          component={LogInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Main"
           component={MainNavigator}
           options={{ title: 'ReactNativeStater' }}
-        /> */}
-        <Stack.Screen
-          name="SignIn"
-          component={SignInScreen}
-          options={{ headerShown: false }}
         />
         {/* <Stack.Screen
           name="Demo"
