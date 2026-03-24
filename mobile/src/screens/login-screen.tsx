@@ -27,7 +27,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 		error: '',
 	});
 
-	const { user, isLoading, login } = useLogin();
+	const { user, loading, login } = useLogin();
 
 	useEffect(() => {
 		if (user) {
@@ -110,7 +110,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 							</XStack>
 
 							<Button
-								loading={isLoading}
+								loading={loading}
 								onPress={() => {
 									onPressSignIn();
 								}}

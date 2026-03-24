@@ -7,7 +7,7 @@ const useLogin = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectLoginUser);
   const token = useAppSelector(selectLoginAccessToken);
-  const isLoading = useAppSelector(state => state.login.loading);
+  const loading = useAppSelector(state => state.login.loading);
 
   const login = useCallback((credentials: LoginRequest) => {
     dispatch(loginUser(credentials));
@@ -17,7 +17,7 @@ const useLogin = () => {
     dispatch(logout());
   }, [dispatch]);
 
-  return { user, token, isLoading, login, logout: logoutUser };
+  return { user, token, loading, login, logout: logoutUser };
 };
 
 export default useLogin;
