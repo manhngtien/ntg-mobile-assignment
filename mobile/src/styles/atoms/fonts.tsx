@@ -1,6 +1,7 @@
 import { StyleSheet, TextStyle } from "react-native";
 
 type IFontStyles = {
+  text_xs2: TextStyle;
   text_xs: TextStyle;
   text_sm: TextStyle;
   text_base: TextStyle;
@@ -17,20 +18,28 @@ type IFontStyles = {
 };
 
 export const fonts = StyleSheet.create<IFontStyles>({
+  text_xs2: {
+    fontSize: 10,
+  },
   text_xs: {
     fontSize: 12,
+    lineHeight: 16,
   },
   text_sm: {
     fontSize: 14,
+    lineHeight: 20,
   },
   text_base: {
     fontSize: 16,
+    lineHeight: 24,
   },
   text_lg: {
     fontSize: 18,
+    lineHeight: 28,
   },
   text_xl: {
     fontSize: 20,
+    lineHeight: 28,
   },
   text_xl2: {
     fontSize: 24,

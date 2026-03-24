@@ -5,6 +5,7 @@ type IBorderStyles = {
   border_none: ViewStyle;
   border_sm: ViewStyle;
   border_md: ViewStyle;
+  border_lg: ViewStyle;
 
   // Border radius
   rounded_xs: ViewStyle;
@@ -29,6 +30,9 @@ export const borders = StyleSheet.create<IBorderStyles>({
   },
   border_md: {
     borderWidth: 2,
+  },
+  border_lg: {
+    borderWidth: 4,
   },
 
   // Border radius

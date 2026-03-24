@@ -9,6 +9,7 @@ type IFlexStyles = {
   items_center: ViewStyle;
   items_start: ViewStyle;
   items_end: ViewStyle;
+  items_stretch: ViewStyle;
 };
 
 export const flex = StyleSheet.create<IFlexStyles>({
@@ -35,5 +36,8 @@ export const flex = StyleSheet.create<IFlexStyles>({
   },
   items_end: {
     alignItems: 'flex-end',
+  },
+  items_stretch: {
+    alignItems: 'stretch',
   },
 });

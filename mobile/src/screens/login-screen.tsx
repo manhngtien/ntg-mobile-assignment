@@ -27,7 +27,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 		error: '',
 	});
 
-	const { user, loading, login } = useLogin();
+	const { user, isLoading, login } = useLogin();
 
 	useEffect(() => {
 		if (user) {
@@ -65,7 +65,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 							</YStack>
 						</YStack>
 
-						<XStack p={1} style={[atoms.rounded_xl, atoms.h_11, { backgroundColor: "#F3F4F6" }]}>
+						<XStack p={1} style={[atoms.items_stretch, atoms.rounded_xl, atoms.h_11, { backgroundColor: "#F3F4F6" }]}>
 							<LoginButton style={[atoms.flex_1]} isTouchable={false}>
 								<Text>Login</Text>
 							</LoginButton>
@@ -110,7 +110,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 							</XStack>
 
 							<Button
-								loading={loading}
+								loading={isLoading}
 								onPress={() => {
 									onPressSignIn();
 								}}

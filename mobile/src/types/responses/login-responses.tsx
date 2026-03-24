@@ -1,19 +1,9 @@
-export interface User {
-  id: number;
-  username: string;
-  email: string;
-  age: number;
-  role: string;
-  firstName: string;
-  lastName: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { UserResponse } from "./user-response";
 
 export interface LoginResponse {
   status: boolean;
   data?: {
-    user: User;
+    user: UserResponse;
     token: string;
   };
   error?: {

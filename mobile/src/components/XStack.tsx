@@ -14,6 +14,7 @@ export const XStack: React.FC<XStackProps> = ({ children, gap = 0, p = 0, style 
       style={[
         {
           flexDirection: 'row',
+          alignItems: 'center',
           gap,
           padding: p * 4,
         },

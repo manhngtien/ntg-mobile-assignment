@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { loginUser, logout, selectLoginUser, selectLoginAccessToken, selectLoginLoading } from '../slices/login-slice';
+import { loginUser, logout, selectLoginUser, selectLoginAccessToken } from '../slices/login-slice';
 import { useAppDispatch, useAppSelector } from '../stores/store';
 import { LoginRequest } from '../types/requests/login-requests';
 
@@ -7,7 +7,7 @@ const useLogin = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectLoginUser);
   const token = useAppSelector(selectLoginAccessToken);
-  const loading = useAppSelector(selectLoginLoading);
+  const isLoading = useAppSelector(state => state.login.loading);
 
   const login = useCallback((credentials: LoginRequest) => {
     dispatch(loginUser(credentials));
@@ -17,7 +17,7 @@ const useLogin = () => {
     dispatch(logout());
   }, [dispatch]);
 
-  return { user, token, loading, login, logout: logoutUser };
+  return { user, token, isLoading, login, logout: logoutUser };
 };
 
 export default useLogin;

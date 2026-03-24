@@ -34,6 +34,28 @@ type ISpacingStyles = {
   my_8: ViewStyle;
   my_9: ViewStyle;
   my_10: ViewStyle;
+  mt_0: ViewStyle;
+  mt_1: ViewStyle;
+  mt_2: ViewStyle;
+  mt_3: ViewStyle;
+  mt_4: ViewStyle;
+  mt_5: ViewStyle;
+  mt_6: ViewStyle;
+  mt_7: ViewStyle;
+  mt_8: ViewStyle;
+  mt_9: ViewStyle;
+  mt_10: ViewStyle;
+  mb_0: ViewStyle;
+  mb_1: ViewStyle;
+  mb_2: ViewStyle;
+  mb_3: ViewStyle;
+  mb_4: ViewStyle;
+  mb_5: ViewStyle;
+  mb_6: ViewStyle;
+  mb_7: ViewStyle;
+  mb_8: ViewStyle;
+  mb_9: ViewStyle;
+  mb_10: ViewStyle;
   p_0: ViewStyle;
   p_1: ViewStyle;
   p_2: ViewStyle;
@@ -103,6 +125,28 @@ export const spacings = StyleSheet.create<ISpacingStyles>({
   my_8: { marginVertical: 32 },
   my_9: { marginVertical: 36 },
   my_10: { marginVertical: 40 },
+  mt_0: { marginTop: 0 },
+  mt_1: { marginTop: 4 },
+  mt_2: { marginTop: 8 },
+  mt_3: { marginTop: 12 },
+  mt_4: { marginTop: 16 },
+  mt_5: { marginTop: 20 },
+  mt_6: { marginTop: 24 },
+  mt_7: { marginTop: 28 },
+  mt_8: { marginTop: 32 },
+  mt_9: { marginTop: 36 },
+  mt_10: { marginTop: 40 },
+  mb_0: { marginBottom: 0 },
+  mb_1: { marginBottom: 4 },
+  mb_2: { marginBottom: 8 },
+  mb_3: { marginBottom: 12 },
+  mb_4: { marginBottom: 16 },
+  mb_5: { marginBottom: 20 },
+  mb_6: { marginBottom: 24 },
+  mb_7: { marginBottom: 28 },
+  mb_8: { marginBottom: 32 },
+  mb_9: { marginBottom: 36 },
+  mb_10: { marginBottom: 40 },
   p_0: { padding: 0 },
   p_1: { padding: 4 },
   p_2: { padding: 8 },

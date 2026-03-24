@@ -10,14 +10,14 @@ interface LoginState {
   user: User | null;
   token: string | null;
   loading: boolean;
-  success: boolean | null;
+  isLoginSuccess: boolean | null;
 }
 
 const initialState: LoginState = {
   user: null,
   token: null,
   loading: false,
-  success: null
+  isLoginSuccess: null
 };
 
 export const loginSlice = createSlice({
@@ -29,18 +29,18 @@ export const loginSlice = createSlice({
     },
     loginSuccess: (state, action: PayloadAction<LoginResponse['data']>) => {
       state.loading = false;
-      state.success = true;
+      state.isLoginSuccess = true;
       state.user = action.payload!.user;
       state.token = action.payload!.token;
     },
     loginFailure: (state) => {
       state.loading = false;
-      state.success = false;
+      state.isLoginSuccess = false;
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
-      state.success = null;
+      state.isLoginSuccess = null;
     },
   },
 });
@@ -63,5 +63,6 @@ export const loginUser = (credentials: LoginRequest): AppThunk => async (dispatc
 export const selectLoginUser = (state: { login: LoginState }) => state.login.user;
 export const selectLoginAccessToken = (state: { login: LoginState }) => state.login.token;
 export const selectLoginLoading = (state: { login: LoginState }) => state.login.loading;
+export const selectIsLoginSuccess = (state: { login: LoginState }) => state.login.isLoginSuccess;
 
 export default loginSlice.reducer;
