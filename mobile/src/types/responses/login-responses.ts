@@ -1,9 +1,9 @@
-import { UserResponse } from "./user-response";
+import { User } from "../../models/user";
 
 export interface LoginResponse {
   status: boolean;
   data?: {
-    user: UserResponse;
+    user: User;
     token: string;
   };
   error?: {
