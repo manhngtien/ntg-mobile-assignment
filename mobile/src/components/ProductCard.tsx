@@ -1,12 +1,13 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { atoms } from "../styles/atoms";
 import FontAwesomeFreeSolid from "@react-native-vector-icons/fontawesome-free-solid";
 import { YStack } from "./YStack";
 import { XStack } from "./XStack";
 import { theme } from "../styles/theme";
+import { ProductResponse } from "../types/responses/product-responses";
 
 type ProductCardProps = {
-  item: any;
+  item: ProductResponse;
   isRightItem?: boolean;
 };
 
@@ -37,20 +38,24 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
 
       <YStack gap={4}>
         <YStack>
-          <Text style={[
-            atoms.text_sm,
-            atoms.font_medium,
-            { color: '#111827' }
-          ]}>
-            {item.title}
+          <Text
+            numberOfLines={1}
+            style={[
+              atoms.text_sm,
+              atoms.font_medium,
+              { color: '#111827' }
+            ]}
+          >
+            {item.name}
           </Text>
           <Text
+            numberOfLines={1}
             style={[
               atoms.text_xs,
               { color: '#6B7280' }
             ]}
           >
-            {item.category}
+            {item.description}
           </Text>
         </YStack>
 
@@ -63,14 +68,15 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             >
               ${item.price.toFixed(2)}
             </Text>
-            {item.previousPrice && (
+            {/* TODO: oldPrice handling code */}
+            {/* {item.oldPrice && (
               <Text style={[
                 atoms.text_xs2,
                 { lineHeight: 20, color: '#9CA3AF', textDecorationLine: 'line-through' }
               ]}>
-                ${item.previousPrice.toFixed(2)}
+                ${item.oldPrice.toFixed(2)}
               </Text>
-            )}
+            )} */}
           </XStack>
           <TouchableOpacity
             style={[

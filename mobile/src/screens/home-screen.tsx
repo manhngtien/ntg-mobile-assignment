@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { atoms } from '../styles/atoms';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ProductCard } from '../components/ProductCard';
@@ -8,64 +7,72 @@ import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import FilterChipList from '../components/FilterChipList';
+import useGetProducts from '../hooks/use-get-products';
+import { LoadingIndicator } from '../components/LoadingIndicator';
+import { useEffect } from 'react';
 
 interface HomeScreenProps {
 	navigation: any;
 }
 
-const DATA = [
-	{
-		id: "1",
-		title: "Sonic-ü Wireless...",
-		category: "Electronics",
-		price: 129,
-		previousPrice: 149,
-		image:
-			"https://images.unsplash.com/photo-1585386959984-a4155224a1ad",
-	},
-	{
-		id: "2",
-		title: "Metro Classic Timepiece",
-		category: "Fashion",
-		price: 85.5,
-		image:
-			"https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-	},
-	{
-		id: "3",
-		title: "Artisan Ceramic Mug",
-		category: "Home",
-		price: 24,
-		image:
-			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
-	},
-	{
-		id: "4",
-		title: "Glow Essentials Kit",
-		category: "Beauty",
-		price: 45,
-		image:
-			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
-	},
-	{
-		id: "5",
-		title: "Artisan Ceramic Mug",
-		category: "Home",
-		price: 24,
-		image:
-			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
-	},
-	{
-		id: "6",
-		title: "Glow Essentials Kit",
-		category: "Beauty",
-		price: 45,
-		image:
-			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
-	},
-];
+// const DATA = [
+// 	{
+// 		id: "1",
+// 		title: "Sonic-ü Wireless...",
+// 		category: "Electronics",
+// 		price: 129,
+// 		previousPrice: 149,
+// 		image:
+// 			"https://images.unsplash.com/photo-1585386959984-a4155224a1ad",
+// 	},
+// 	{
+// 		id: "2",
+// 		title: "Metro Classic Timepiece",
+// 		category: "Fashion",
+// 		price: 85.5,
+// 		image:
+// 			"https://images.unsplash.com/photo-1523275335684-37898b6baf30",
+// 	},
+// 	{
+// 		id: "3",
+// 		title: "Artisan Ceramic Mug",
+// 		category: "Home",
+// 		price: 24,
+// 		image:
+// 			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
+// 	},
+// 	{
+// 		id: "4",
+// 		title: "Glow Essentials Kit",
+// 		category: "Beauty",
+// 		price: 45,
+// 		image:
+// 			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
+// 	},
+// 	{
+// 		id: "5",
+// 		title: "Artisan Ceramic Mug",
+// 		category: "Home",
+// 		price: 24,
+// 		image:
+// 			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
+// 	},
+// 	{
+// 		id: "6",
+// 		title: "Glow Essentials Kit",
+// 		category: "Beauty",
+// 		price: 45,
+// 		image:
+// 			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
+// 	},
+// ];
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+	const { products, getProducts } = useGetProducts();
+
+	useEffect(() => {
+		getProducts()
+	}, [getProducts])
 
 	return (
 		<Background>
@@ -132,16 +139,17 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
 				{/* Products */}
 				<FlatList
-					data={DATA}
+					data={products}
 					style={[atoms.py_6, atoms.px_4]}
 					numColumns={2}
-					keyExtractor={(item) => item.id}
+					keyExtractor={(item) => item.id.toString()}
 					columnWrapperStyle={[atoms.justify_between]}
 					renderItem={({ item, index }) =>
 						<ProductCard item={item} isRightItem={index % 2 === 1} />
 					}
 					ItemSeparatorComponent={<View style={[atoms.h_4]} />}
 					contentContainerStyle={[atoms.pb_10]}
+					ListEmptyComponent={<LoadingIndicator />}
 				/>
 			</YStack>
 		</Background>
