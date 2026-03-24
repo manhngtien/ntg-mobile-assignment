@@ -89,6 +89,28 @@ type ISpacingStyles = {
   py_8: ViewStyle;
   py_9: ViewStyle;
   py_10: ViewStyle;
+  pt_0: ViewStyle;
+  pt_1: ViewStyle;
+  pt_2: ViewStyle;
+  pt_3: ViewStyle;
+  pt_4: ViewStyle;
+  pt_5: ViewStyle;
+  pt_6: ViewStyle;
+  pt_7: ViewStyle;
+  pt_8: ViewStyle;
+  pt_9: ViewStyle;
+  pt_10: ViewStyle;
+  pb_0: ViewStyle;
+  pb_1: ViewStyle;
+  pb_2: ViewStyle;
+  pb_3: ViewStyle;
+  pb_4: ViewStyle;
+  pb_5: ViewStyle;
+  pb_6: ViewStyle;
+  pb_7: ViewStyle;
+  pb_8: ViewStyle;
+  pb_9: ViewStyle;
+  pb_10: ViewStyle;
 };
 
 export const spacings = StyleSheet.create<ISpacingStyles>({
@@ -180,4 +202,26 @@ export const spacings = StyleSheet.create<ISpacingStyles>({
   py_8: { paddingVertical: 32 },
   py_9: { paddingVertical: 36 },
   py_10: { paddingVertical: 40 },
+  pt_0: { paddingTop: 0 },
+  pt_1: { paddingTop: 4 },
+  pt_2: { paddingTop: 8 },
+  pt_3: { paddingTop: 12 },
+  pt_4: { paddingTop: 16 },
+  pt_5: { paddingTop: 20 },
+  pt_6: { paddingTop: 24 },
+  pt_7: { paddingTop: 28 },
+  pt_8: { paddingTop: 32 },
+  pt_9: { paddingTop: 36 },
+  pt_10: { paddingTop: 40 },
+  pb_0: { paddingBottom: 0 },
+  pb_1: { paddingBottom: 4 },
+  pb_2: { paddingBottom: 8 },
+  pb_3: { paddingBottom: 12 },
+  pb_4: { paddingBottom: 16 },
+  pb_5: { paddingBottom: 20 },
+  pb_6: { paddingBottom: 24 },
+  pb_7: { paddingBottom: 28 },
+  pb_8: { paddingBottom: 32 },
+  pb_9: { paddingBottom: 36 },
+  pb_10: { paddingBottom: 40 },
 });

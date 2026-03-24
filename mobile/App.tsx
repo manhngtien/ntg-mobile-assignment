@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogInScreen } from './src/screens/login-screen';
-import { AuthProvider } from './src/contexts/auth-context';
 import MainNavigator from './src/screens/navigator/main-navigator';
 import { Provider } from 'react-redux';
 import store from './src/stores/store';
@@ -10,12 +9,9 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Provider store={store}>
-        <AppContent />
-      </Provider>
-    </AuthProvider>
-
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   );
 };
 

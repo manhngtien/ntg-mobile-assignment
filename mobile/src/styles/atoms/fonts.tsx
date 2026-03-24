@@ -20,6 +20,7 @@ type IFontStyles = {
 export const fonts = StyleSheet.create<IFontStyles>({
   text_xs2: {
     fontSize: 10,
+    lineHeight: 14,
   },
   text_xs: {
     fontSize: 12,
