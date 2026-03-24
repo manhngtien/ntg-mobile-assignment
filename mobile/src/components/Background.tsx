@@ -1,19 +1,26 @@
 import React from 'react';
-import { ImageBackground, KeyboardAvoidingView, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageBackground, KeyboardAvoidingView, StyleSheet, TextStyle, useWindowDimensions, ViewStyle } from 'react-native';
 import ImageAssets from '../assets/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type IBackgroundStyles = {
 	safeArea: ViewStyle;
 	container: ViewStyle;
-	text: TextStyle;
 	background: ViewStyle;
 };
 
 
 export default function Background({ children }: any) {
+	const { height } = useWindowDimensions();
+
 	return (
-		<SafeAreaView style={styles.safeArea}>
+		<SafeAreaView
+			style={[
+				styles.safeArea,
+				{ height: height, backgroundColor: '#1F2937' }
+			]}
+			edges={['left', 'right', 'top']}
+		>
 			<ImageBackground
 				source={ImageAssets.background_dot}
 				resizeMode="repeat"
@@ -37,12 +44,6 @@ const styles = StyleSheet.create<IBackgroundStyles>({
 	},
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
 		backgroundColor: '#F9FAFB',
-	},
-	text: {
-		fontSize: 14,
-		color: '#374151',
-	},
+	}
 });
