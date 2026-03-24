@@ -2,10 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../thunks/app-thunk';
 import { apiService } from '../services/api-service';
 import { ToastAndroid } from 'react-native';
-import { ProductResponse } from '../types/responses/product-responses';
+import { Product } from '../models/product';
 
 interface ProductState {
-  products: ProductResponse[];
+  products: Product[];
   loading: boolean;
   error: string | null;
 }
@@ -24,7 +24,7 @@ export const productSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchProductsSuccess: (state, action: PayloadAction<ProductResponse[]>) => {
+    fetchProductsSuccess: (state, action: PayloadAction<Product[]>) => {
       state.loading = false;
       state.products = action.payload;
     },

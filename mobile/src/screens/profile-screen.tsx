@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TouchableOpacity, Image, useWindowDimensions } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity, Image } from "react-native";
 import { atoms } from "../styles/atoms";
 import { theme } from "../styles/theme";
 import FontAwesomeFreeSolid from "@react-native-vector-icons/fontawesome-free-solid";
@@ -15,7 +15,7 @@ interface ProfileScreenProps {
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
-	const { isLoading, user, fetchAuthUser } = useAuth();
+	const { loading, user, fetchAuthUser } = useAuth();
 	const { logout } = useLogin();
 
 	useEffect(() => {
@@ -64,8 +64,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 					</TouchableOpacity>
 				</View>
 
-				{isLoading && <LoadingIndicator />}
-				{!isLoading && <ScrollView
+				{loading && <LoadingIndicator />}
+				{!loading && <ScrollView
 					showsVerticalScrollIndicator={false}
 					style={[atoms.flex_1, atoms.p_4]}
 				>

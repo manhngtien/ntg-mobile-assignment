@@ -4,10 +4,10 @@ import FontAwesomeFreeSolid from "@react-native-vector-icons/fontawesome-free-so
 import { YStack } from "./YStack";
 import { XStack } from "./XStack";
 import { theme } from "../styles/theme";
-import { ProductResponse } from "../types/responses/product-responses";
+import { Product } from "../models/product";
 
 type ProductCardProps = {
-  item: ProductResponse;
+  item: Product;
   isRightItem?: boolean;
 };
 

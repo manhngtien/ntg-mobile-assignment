@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk } from '../thunks/app-thunk';
 import { apiService } from '../services/api-service';
-import { UserResponse } from '../types/responses/user-response';
 import { AuthResponse } from '../types/responses/auth-response';
 import { ToastAndroid } from 'react-native';
+import { User } from '../models/user';
 
 interface AuthState {
-  userProfile: UserResponse | null;
+  userProfile: User | null;
   loading: boolean;
   isAuthenticated: boolean | null;
 }

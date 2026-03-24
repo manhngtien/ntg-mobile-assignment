@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeScreen } from '../home-screen';
 import { ProfileScreen } from '../profile-screen';
 import { Image, StyleSheet, Text } from 'react-native';
-import ListScreen from '../list-screen';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { atoms } from '../../styles/atoms';
 
