@@ -19,20 +19,19 @@ const MainNavigator: React.FC<IMainNavigator> = ({ navigation }) => {
 		<Tab.Navigator
 			screenOptions={{
 				headerShown: false,
+				tabBarActiveTintColor: "#0DF2F2",
+				tabBarInactiveTintColor: "#94A3B8"
 			}}
 		>
 			<Tab.Screen name="Home" component={HomeScreen} options={{
 				tabBarLabel: 'Home',
-				tabBarIcon: ({ color, size }) => (
-					<Image source={require('../../assets/images/home.png')} style={styles.icon} />
+				tabBarLabelStyle: [
+					atoms.font_medium,
+					atoms.text_xs2,
+				],
+				tabBarIcon: ({ color }) => (
+					<FontAwesomeFreeSolid name='home' size={22} color={color} />
 				),
-			}} />
-			<Tab.Screen name="Tab3" component={ListScreen} options={{
-				tabBarLabel: 'List',
-				tabBarIcon: ({ color, size }) => (
-					<Image source={require('../../assets/images/list.png')} style={styles.icon} />
-				),
-
 			}} />
 
 			<Tab.Screen name="Profile" component={ProfileScreen} options={{
@@ -40,10 +39,9 @@ const MainNavigator: React.FC<IMainNavigator> = ({ navigation }) => {
 				tabBarLabelStyle: [
 					atoms.font_medium,
 					atoms.text_xs2,
-					{ color: '#0DF2F2' }
 				],
-				tabBarIcon: () => (
-					<FontAwesomeFreeSolid name='user' size={22} color={"#0DF2F2"} />
+				tabBarIcon: ({ color }) => (
+					<FontAwesomeFreeSolid name='user' size={22} color={color} />
 				),
 			}} />
 		</Tab.Navigator>
