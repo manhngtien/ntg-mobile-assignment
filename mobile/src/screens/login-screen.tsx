@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import { Background } from "../components/Background"
 import { Logo } from "../components/Logo"
@@ -27,13 +27,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 		error: '',
 	});
 
-	const { user, loading, login } = useLogin();
-
-	useEffect(() => {
-		if (user) {
-			navigation.navigate('Main');
-		}
-	}, [user])
+	const { loading, login } = useLogin();
 
 	function onPressSignIn() {
 		login({ username: email.value, password: password.value });

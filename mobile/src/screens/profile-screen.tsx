@@ -15,12 +15,14 @@ interface ProfileScreenProps {
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
-	const { loading, user, fetchAuthUser } = useAuth();
+	const { loading, isAuthenticated, user, fetchAuthUser } = useAuth();
 	const { logout } = useLogin();
 
 	useEffect(() => {
-		fetchAuthUser();
-	}, [fetchAuthUser]);
+		if (!isAuthenticated) {
+			fetchAuthUser();
+		}
+	}, [fetchAuthUser, isAuthenticated]);
 
 	return (
 		<Background>
