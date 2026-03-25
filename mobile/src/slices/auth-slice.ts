@@ -1,58 +1,120 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk } from '../thunks/app-thunk';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { apiService } from '../services/api-service';
 import { AuthResponse } from '../types/responses/auth-response';
+import { LoginResponse } from '../types/responses/login-responses';
+import { LoginRequest } from '../types/requests/login-requests';
 import { ToastAndroid } from 'react-native';
 import { User } from '../models/user';
 
 interface AuthState {
-  userProfile: User | null;
+  user: User | null;
+  token: string | null;
   loading: boolean;
   isAuthenticated: boolean | null;
+  isLoginSuccess: boolean | null;
 }
 
 const initialState: AuthState = {
-  userProfile: null,
+  user: null,
+  token: null,
   loading: false,
-  isAuthenticated: null
+  isAuthenticated: null,
+  isLoginSuccess: null
 };
+
+export const fetchProfile = createAsyncThunk<AuthResponse['data'], string>(
+  'auth/fetchProfile',
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      const response = await apiService.getUser(accessToken);
+      return response.data;
+    } catch {
+      return rejectWithValue('Failed to fetch user data');
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk<LoginResponse['data'], LoginRequest>(
+  'auth/loginUser',
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const response = await apiService.login(credentials);
+      return response.data;
+    } catch {
+      return rejectWithValue('Login failed. Please try again.');
+    }
+  }
+);
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    fetchUserStart: (state) => {
+    loginStart: (state) => {
       state.loading = true;
     },
-    fetchUserSuccess: (state, action: PayloadAction<AuthResponse['data']>) => {
+    loginSuccess: (state, action: PayloadAction<LoginResponse['data']>) => {
       state.loading = false;
+      state.isLoginSuccess = true;
       state.isAuthenticated = true;
-      state.userProfile = action.payload;
+      state.user = action.payload!.user;
+      state.token = action.payload!.token;
     },
-    fetchUserFailure: (state) => {
+    loginFailure: (state) => {
       state.loading = false;
-      state.isAuthenticated = false;
+      state.isLoginSuccess = false;
+    },
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = null;
+      state.isLoginSuccess = null;
     }
   },
+  extraReducers: (builder) => {
+    builder
+      // fetchProfile cases
+      .addCase(fetchProfile.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<AuthResponse['data']>) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+      })
+      .addCase(fetchProfile.rejected, (state) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        ToastAndroid.show('Failed to fetch user data. Please log in.', ToastAndroid.LONG);
+      })
+      // loginUser cases
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<LoginResponse['data']>) => {
+        state.loading = false;
+        state.isLoginSuccess = true;
+        state.isAuthenticated = true;
+        state.user = action.payload!.user;
+        state.token = action.payload!.token;
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.loading = false;
+        state.isLoginSuccess = false;
+      });
+  }
 });
 
-export const { fetchUserStart, fetchUserSuccess, fetchUserFailure } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
-export const fetchProfile = (accessToken: string): AppThunk => async (dispatch) => {
-  dispatch(fetchUserStart());
-
-  try {
-    const response = await apiService.getUser(accessToken);
-    dispatch(fetchUserSuccess(response.data));
-  }
-  catch {
-    dispatch(fetchUserFailure());
-    ToastAndroid.show("Failed to fetch user data. Please log in.", ToastAndroid.LONG);
-  }
-};
-
-export const selectProfileUser = (state: { auth: AuthState }) => state.auth.userProfile;
-export const selectProfileLoading = (state: { auth: AuthState }) => state.auth.loading;
+// Selectors
+export const selectUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectAccessToken = (state: { auth: AuthState }) => state.auth.token;
+export const selectLoading = (state: { auth: AuthState }) => state.auth.loading;
 export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
+export const selectIsLoginSuccess = (state: { auth: AuthState }) => state.auth.isLoginSuccess;
+
+// Login-specific selectors (for backward compatibility)
+export const selectLoginUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectLoginAccessToken = (state: { auth: AuthState }) => state.auth.token;
 
 export default authSlice.reducer;

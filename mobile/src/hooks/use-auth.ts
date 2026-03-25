@@ -1,14 +1,13 @@
 import { useCallback } from 'react';
-import { selectIsAuthenticated, fetchProfile, selectProfileUser, selectProfileLoading } from '../slices/auth-slice';
+import { selectIsAuthenticated, fetchProfile, selectLoading, selectUser, selectAccessToken } from '../slices/auth-slice';
 import { useAppDispatch, useAppSelector } from '../stores/store';
-import { selectLoginAccessToken } from '../slices/login-slice';
 
 const useAuth = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(selectProfileUser);
-  const loading = useAppSelector(selectProfileLoading);
+  const user = useAppSelector(selectUser);
+  const loading = useAppSelector(selectLoading);
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const token = useAppSelector(selectLoginAccessToken);
+  const token = useAppSelector(selectAccessToken);
 
   const fetchAuthUser = useCallback(() => {
     dispatch(fetchProfile(token!));

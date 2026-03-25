@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { fetchProducts, selectProducts, selectProductsLoading, selectProductsError } from '../slices/product-slice';
 import { useAppDispatch, useAppSelector } from '../stores/store';
-import { selectLoginAccessToken } from '../slices/login-slice';
+import { selectAccessToken } from '../slices/auth-slice';
 
 const useGetProducts = () => {
   const dispatch = useAppDispatch();
-  const token = useAppSelector(selectLoginAccessToken);
+  const token = useAppSelector(selectAccessToken);
   const products = useAppSelector(selectProducts);
   const loading = useAppSelector(selectProductsLoading);
   const error = useAppSelector(selectProductsError);
