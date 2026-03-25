@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk } from '../thunks/app-thunk';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { apiService } from '../services/api-service';
 import { ToastAndroid } from 'react-native';
 import { Product } from '../models/product';
@@ -16,41 +15,41 @@ const initialState: ProductState = {
   error: null
 };
 
+export const fetchProducts = createAsyncThunk<Product[], string>(
+  'product/fetchProducts',
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      const response = await apiService.getProducts(accessToken);
+      return response.data;
+    } catch {
+      return rejectWithValue('Failed to fetch products');
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {
-    fetchProductsStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    fetchProductsSuccess: (state, action: PayloadAction<Product[]>) => {
-      state.loading = false;
-      state.products = action.payload;
-    },
-    fetchProductsFailure: (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<Product[]>) => {
+        state.loading = false;
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        ToastAndroid.show('Failed to fetch products. Please try again.', ToastAndroid.LONG);
+      });
+  }
 });
 
-export const { fetchProductsStart, fetchProductsSuccess, fetchProductsFailure } = productSlice.actions;
-
-export const fetchProducts = (accessToken: string): AppThunk => async (dispatch) => {
-  dispatch(fetchProductsStart());
-
-  try {
-    const response = await apiService.getProducts(accessToken);
-    dispatch(fetchProductsSuccess(response.data));
-  }
-  catch (error) {
-    let errorMessage = error ? String(error) : 'Unknown error';
-    dispatch(fetchProductsFailure(errorMessage));
-    ToastAndroid.show("Failed to fetch products. Please try again.", ToastAndroid.LONG);
-  }
-};
-
+// Selectors
 export const selectProducts = (state: { product: ProductState }) => state.product.products;
 export const selectProductsLoading = (state: { product: ProductState }) => state.product.loading;
 export const selectProductsError = (state: { product: ProductState }) => state.product.error;
