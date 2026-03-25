@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { API_BASE_URL } from '../constants';
-import { GetProductsResponse } from '../features/product/types';
+import { API_BASE_URL } from '../../constants';
+import { GetProductsResponse } from '../../features/product/types';
 
 const getProducts = async (accessToken: string): Promise<GetProductsResponse> => {
     var response = await axios.get<GetProductsResponse>(

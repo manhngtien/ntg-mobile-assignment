@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { AuthResponse, LoginResponse, LoginRequest } from './types';
+import { LoginResponse, LoginRequest } from './types';
 import { ToastAndroid } from 'react-native';
 import { User } from '../../models/user';
-import { authService } from '../../services/auth-service';
+import { authService } from '../../services/apis/auth-service';
+import { secureStorageService } from '../../services/secure-storage-service';
 
 interface AuthState {
   user: User | null;
@@ -20,26 +21,36 @@ const initialState: AuthState = {
   isLoginSuccess: null
 };
 
-export const fetchProfile = createAsyncThunk<AuthResponse['data'], string>(
-  'auth/fetchProfile',
-  async (accessToken, { rejectWithValue }) => {
-    try {
-      const response = await authService.getUser(accessToken);
-      return response.data;
-    } catch {
-      return rejectWithValue('Failed to fetch user data');
-    }
-  }
-);
-
 export const loginUser = createAsyncThunk<LoginResponse['data'], LoginRequest>(
   'auth/loginUser',
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await authService.login(credentials);
+      // Save token to secure storage
+      if (response.data?.token) {
+        await secureStorageService.saveToken(response.data.token);
+      }
       return response.data;
     } catch {
       return rejectWithValue('Login failed. Please try again.');
+    }
+  }
+);
+
+export const initializeAuth = createAsyncThunk<User | null, void>(
+  'auth/initializeAuth',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = await secureStorageService.loadToken();
+      if (token) {
+        const response = await authService.getUser(token);
+        return response.data;
+      }
+      return null;
+    } catch {
+      // Token is invalid or expired, remove it
+      await secureStorageService.removeToken();
+      return null;
     }
   }
 );
@@ -67,22 +78,25 @@ export const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = null;
       state.isLoginSuccess = null;
+      secureStorageService.removeToken();
     }
   },
   extraReducers: (builder) => {
     builder
-      // fetchProfile cases
-      .addCase(fetchProfile.pending, (state) => {
+      // initializeAuth cases
+      .addCase(initializeAuth.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchProfile.fulfilled, (state, action: PayloadAction<AuthResponse['data']>) => {
+      .addCase(initializeAuth.fulfilled, (state, action: PayloadAction<User | null>) => {
         state.loading = false;
-        state.isAuthenticated = true;
+        if (action.payload) {
+          state.user = action.payload;
+          state.isAuthenticated = true;
+        }
       })
-      .addCase(fetchProfile.rejected, (state) => {
+      .addCase(initializeAuth.rejected, (state) => {
         state.loading = false;
         state.isAuthenticated = false;
-        ToastAndroid.show('Failed to fetch user data. Please log in.', ToastAndroid.LONG);
       })
       // loginUser cases
       .addCase(loginUser.pending, (state) => {

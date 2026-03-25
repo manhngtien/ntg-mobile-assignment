@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LogInScreen } from './src/screens/login-screen';
 import MainNavigator from './src/screens/navigator/main-navigator';
 import { Provider } from 'react-redux';
-import store from './src/stores/store';
+import store from './src/redux/store';
 
 const Stack = createNativeStackNavigator();
 

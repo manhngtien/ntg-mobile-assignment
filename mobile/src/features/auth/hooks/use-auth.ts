@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { fetchProfile, selectAccessToken, selectIsAuthenticated, selectLoading, selectUser } from '../auth-slice';
+import { initializeAuth, selectAccessToken, selectIsAuthenticated, selectLoading, selectUser } from '../auth-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
 export const useAuth = () => {
@@ -10,7 +10,7 @@ export const useAuth = () => {
   const token = useAppSelector(selectAccessToken);
 
   const fetchAuthUser = useCallback(() => {
-    dispatch(fetchProfile(token!));
+    dispatch(initializeAuth());
   }, [dispatch]);
 
   return { user, loading, isAuthenticated, fetchAuthUser };

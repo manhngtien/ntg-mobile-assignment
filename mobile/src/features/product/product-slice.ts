@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { ToastAndroid } from 'react-native';
-import { productService } from '../../services/product-service';
+import { productService } from '../../services/apis/product-service';
 import { Product } from '../../models/product';
 
 interface ProductState {
