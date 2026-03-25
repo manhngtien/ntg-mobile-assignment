@@ -6,66 +6,14 @@ import Background from '../components/Background';
 import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
-import FilterChipList from '../components/FilterChipList';
-import useGetProducts from '../hooks/use-get-products';
 import { LoadingIndicator } from '../components/LoadingIndicator';
+import useGetProducts from '../hooks/use-get-products';
 import { useEffect } from 'react';
+import FilterChipList from '../components/FilterChipList';
 
 interface HomeScreenProps {
 	navigation: any;
 }
-
-// const DATA = [
-// 	{
-// 		id: "1",
-// 		title: "Sonic-ü Wireless...",
-// 		category: "Electronics",
-// 		price: 129,
-// 		previousPrice: 149,
-// 		image:
-// 			"https://images.unsplash.com/photo-1585386959984-a4155224a1ad",
-// 	},
-// 	{
-// 		id: "2",
-// 		title: "Metro Classic Timepiece",
-// 		category: "Fashion",
-// 		price: 85.5,
-// 		image:
-// 			"https://images.unsplash.com/photo-1523275335684-37898b6baf30",
-// 	},
-// 	{
-// 		id: "3",
-// 		title: "Artisan Ceramic Mug",
-// 		category: "Home",
-// 		price: 24,
-// 		image:
-// 			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
-// 	},
-// 	{
-// 		id: "4",
-// 		title: "Glow Essentials Kit",
-// 		category: "Beauty",
-// 		price: 45,
-// 		image:
-// 			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
-// 	},
-// 	{
-// 		id: "5",
-// 		title: "Artisan Ceramic Mug",
-// 		category: "Home",
-// 		price: 24,
-// 		image:
-// 			"https://images.unsplash.com/photo-1517685352821-92cf88aee5a5",
-// 	},
-// 	{
-// 		id: "6",
-// 		title: "Glow Essentials Kit",
-// 		category: "Beauty",
-// 		price: 45,
-// 		image:
-// 			"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb",
-// 	},
-// ];
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 	const { products, getProducts } = useGetProducts();
@@ -149,7 +97,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					}
 					ItemSeparatorComponent={<View style={[atoms.h_4]} />}
 					contentContainerStyle={[atoms.pb_10]}
-					ListEmptyComponent={<LoadingIndicator />}
+					ListEmptyComponent={
+						<YStack style={[atoms.pt_10]}>
+							<LoadingIndicator />
+						</YStack>
+					}
 				/>
 			</YStack>
 		</Background>

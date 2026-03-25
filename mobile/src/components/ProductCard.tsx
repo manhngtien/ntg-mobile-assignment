@@ -55,7 +55,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
               { color: '#6B7280' }
             ]}
           >
-            {item.description}
+            {item.category}
           </Text>
         </YStack>
 
