@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { initializeAuth, selectIsAuthenticated, selectLoading, selectUser } from '../auth-slice';
+import { selectIsAuthenticated, selectLoading, selectUser } from '../auth-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { initializeAuth } from '../auth-thunk';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();

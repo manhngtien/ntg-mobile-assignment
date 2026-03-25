@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToastAndroid } from 'react-native';
-import { productService } from '../../services/apis/product-service';
 import { Product } from '../../models/product';
-import { secureStorageService } from '../../services/secure-storage-service';
+import { fetchProducts } from './product-thunk';
 
 interface ProductState {
   products: Product[];
@@ -15,23 +14,6 @@ const initialState: ProductState = {
   loading: false,
   error: null
 };
-
-export const fetchProducts = createAsyncThunk<Product[], void>(
-  'product/fetchProducts',
-  async (_, { rejectWithValue }) => {
-    try {
-      const token = await secureStorageService.loadToken();
-      if (!token) {
-        return rejectWithValue('No authentication token found. Please log in.');
-      }
-      const response = await productService.getProducts(token);
-      return response.data;
-    } catch (error: any) {
-      await secureStorageService.removeToken();
-      return rejectWithValue('Failed to fetch products. Please try again.');
-    }
-  }
-);
 
 export const productSlice = createSlice({
   name: 'product',

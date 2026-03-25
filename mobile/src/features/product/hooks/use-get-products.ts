@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { fetchProducts, selectProducts, selectProductsLoading, selectProductsError } from '../product-slice';
+import { selectProducts, selectProductsLoading, selectProductsError } from '../product-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { fetchProducts } from '../product-thunk';
 
 export const useGetProducts = () => {
   const dispatch = useAppDispatch();
