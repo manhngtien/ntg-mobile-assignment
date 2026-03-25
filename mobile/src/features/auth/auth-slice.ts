@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { LoginResponse, LoginRequest } from './types';
-import { ToastAndroid } from 'react-native';
 import { User } from '../../models/user';
 import { authService } from '../../services/apis/auth-service';
 import { secureStorageService } from '../../services/secure-storage-service';
 
 interface AuthState {
   user: User | null;
-  token: string | null;
   loading: boolean;
   isAuthenticated: boolean | null;
   isLoginSuccess: boolean | null;
@@ -15,7 +13,6 @@ interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  token: null,
   loading: false,
   isAuthenticated: null,
   isLoginSuccess: null
@@ -67,7 +64,6 @@ export const authSlice = createSlice({
       state.isLoginSuccess = true;
       state.isAuthenticated = true;
       state.user = action.payload!.user;
-      state.token = action.payload!.token;
     },
     loginFailure: (state) => {
       state.loading = false;
@@ -75,7 +71,6 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
-      state.token = null;
       state.isAuthenticated = null;
       state.isLoginSuccess = null;
       secureStorageService.removeToken();
@@ -107,7 +102,6 @@ export const authSlice = createSlice({
         state.isLoginSuccess = true;
         state.isAuthenticated = true;
         state.user = action.payload!.user;
-        state.token = action.payload!.token;
       })
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
@@ -120,13 +114,11 @@ export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.acti
 
 // Selectors
 export const selectUser = (state: { auth: AuthState }) => state.auth.user;
-export const selectAccessToken = (state: { auth: AuthState }) => state.auth.token;
 export const selectLoading = (state: { auth: AuthState }) => state.auth.loading;
 export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
 export const selectIsLoginSuccess = (state: { auth: AuthState }) => state.auth.isLoginSuccess;
 
 // Login-specific selectors (for backward compatibility)
 export const selectLoginUser = (state: { auth: AuthState }) => state.auth.user;
-export const selectLoginAccessToken = (state: { auth: AuthState }) => state.auth.token;
 
 export default authSlice.reducer;

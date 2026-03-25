@@ -1,12 +1,11 @@
 import { useCallback } from 'react';
-import { loginUser, logout, selectUser, selectAccessToken, selectLoading } from '../auth-slice';
+import { loginUser, logout, selectUser, selectLoading } from '../auth-slice';
 import { LoginRequest } from '../types';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
-  const token = useAppSelector(selectAccessToken);
   const loading = useAppSelector(selectLoading);
 
   const login = useCallback((credentials: LoginRequest) => {
@@ -17,5 +16,5 @@ export const useLogin = () => {
     dispatch(logout());
   }, [dispatch]);
 
-  return { user, token, loading, login, logout: logoutUser };
+  return { user, loading, login, logout: logoutUser };
 };
