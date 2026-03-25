@@ -42,7 +42,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 						style={[atoms.h_10, atoms.w_10, atoms.justify_center, atoms.items_center]} onPress={() => { }}
 					>
 						<Text>
-							<FontAwesomeFreeSolid name="chevron-left" size={20} color="#0F172A" />
+							{/* <FontAwesomeFreeSolid name="chevron-left" size={20} color="#0F172A" /> */}
 						</Text>
 					</TouchableOpacity>
 					<Text
@@ -210,15 +210,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										FIRST NAME
 									</Text>
 									<View style={[
-										atoms.border_sm,
 										atoms.py_2,
 										atoms.px_3,
 										atoms.rounded_xl,
-										{
-											borderColor: '#E5E7EB',
-											backgroundColor: '#F9FAFB'
-										}]}>
-										<Text style={[atoms.text_sm, { color: '#6B7280' }]}>
+									]}>
+										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
 											{user?.firstName}
 										</Text>
 									</View>
@@ -229,15 +225,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										LAST NAME
 									</Text>
 									<View style={[
-										atoms.border_sm,
 										atoms.py_2,
 										atoms.px_3,
 										atoms.rounded_xl,
-										{
-											borderColor: '#E5E7EB',
-											backgroundColor: '#F9FAFB'
-										}]}>
-										<Text style={[atoms.text_sm, { color: '#6B7280' }]}>
+									]}>
+										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
 											{user?.lastName}
 										</Text>
 									</View>
@@ -248,15 +240,11 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										AGE
 									</Text>
 									<View style={[
-										atoms.border_sm,
 										atoms.py_2,
 										atoms.px_3,
 										atoms.rounded_xl,
-										{
-											borderColor: '#E5E7EB',
-											backgroundColor: '#F9FAFB'
-										}]}>
-										<Text style={[atoms.text_sm, { color: '#6B7280' }]}>
+									]}>
+										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
 											{user?.age || 'N/A'}
 										</Text>
 									</View>
