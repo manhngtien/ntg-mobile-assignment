@@ -10,7 +10,7 @@ type ILoginButtonProps = {
 };
 
 // TODO: Refactor this component to be more reusable and customizable => Merge it with Button
-export default function LoginButton({
+export function LoginButton({
     bg = theme.colors.white,
     style,
     children,

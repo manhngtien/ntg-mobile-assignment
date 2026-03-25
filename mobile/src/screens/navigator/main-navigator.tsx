@@ -47,11 +47,4 @@ const MainNavigator: React.FC<IMainNavigator> = ({ navigation }) => {
 	);
 };
 
-const styles = StyleSheet.create({
-	icon: {
-		width: 24,
-		height: 24,
-	},
-});
-
 export default MainNavigator;

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { apiService } from '../services/api-service';
 import { ToastAndroid } from 'react-native';
-import { Product } from '../models/product';
+import { productService } from '../../services/product-service';
+import { Product } from '../../models/product';
 
 interface ProductState {
   products: Product[];
@@ -19,7 +19,7 @@ export const fetchProducts = createAsyncThunk<Product[], string>(
   'product/fetchProducts',
   async (accessToken, { rejectWithValue }) => {
     try {
-      const response = await apiService.getProducts(accessToken);
+      const response = await productService.getProducts(accessToken);
       return response.data;
     } catch {
       return rejectWithValue('Failed to fetch products');

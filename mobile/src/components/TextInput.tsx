@@ -7,7 +7,7 @@ type ITextInputProps = {
     description?: string;
 } & React.ComponentProps<typeof Input>;
 
-export default function TextInput({
+export function TextInput({
     label,
     errorText,
     description,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextStyle } from 'react-native';
 
-export default function Paragraph() {
+export function Paragraph() {
     return <Text style={styles.text} />;
 }
 

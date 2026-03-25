@@ -10,7 +10,7 @@ type IButtonProps = {
     style?: ViewStyle | ViewStyle[];
 } & React.ComponentProps<typeof TouchableOpacity>;
 
-export default function Button({ style, bg, textColor, loading, ...props }: IButtonProps) {
+export function Button({ style, bg, textColor, loading, ...props }: IButtonProps) {
     return (
         <TouchableOpacity
             disabled={loading}

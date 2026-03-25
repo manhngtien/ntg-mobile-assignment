@@ -14,7 +14,7 @@ interface FilterChipListProps {
 
 const categories = ["All Items", "Electronics", "Fashion", "Home", "Beauty", "Health", "Perfumes"];
 
-export default function FilterChipList({
+export function FilterChipList({
   filterChips,
 }: FilterChipListProps) {
   const [selectedChipIdx, setSelectedChipIdx] = React.useState(0);

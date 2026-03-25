@@ -4,7 +4,7 @@ import { theme } from '../styles/theme';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { atoms } from '../styles/atoms';
 
-export default function Checkbox() {
+export function CheckBox() {
   const [checked, setChecked] = useState(false);
 
   return (

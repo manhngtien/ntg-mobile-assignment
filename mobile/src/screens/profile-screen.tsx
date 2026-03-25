@@ -5,10 +5,10 @@ import FontAwesomeFreeSolid from "@react-native-vector-icons/fontawesome-free-so
 import { YStack } from "../components/YStack";
 import { XStack } from "../components/XStack";
 import { LoadingIndicator } from "../components/LoadingIndicator";
-import useLogin from "../hooks/use-login";
-import useAuth from "../hooks/use-auth";
 import { useEffect } from "react";
-import Background from "../components/Background";
+import { Background } from "../components/Background";
+import { useAuth } from "../features/auth/hooks/use-auth";
+import { useLogin } from "../features/auth/hooks/use-login";
 
 interface ProfileScreenProps {
 	navigation: any;

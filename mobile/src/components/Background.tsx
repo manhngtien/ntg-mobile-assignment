@@ -10,7 +10,7 @@ type IBackgroundStyles = {
 };
 
 
-export default function Background({ children }: any) {
+export function Background({ children }: any) {
 	const { height } = useWindowDimensions();
 
 	return (

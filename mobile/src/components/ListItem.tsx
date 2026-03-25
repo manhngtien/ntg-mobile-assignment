@@ -9,8 +9,8 @@ interface ListItemProps {
   };
 }
 
-const ListItem: React.FC<ListItemProps> = ({ item }) => {
-    const placeholderImage = require('../assets/images/logo.png'); // Replace with your placeholder image
+export const ListItem: React.FC<ListItemProps> = ({ item }) => {
+  const placeholderImage = require('../assets/images/logo.png'); // Replace with your placeholder image
 
   return (
     <View style={styles.listItem}>
@@ -52,5 +52,3 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
-
-export default ListItem;

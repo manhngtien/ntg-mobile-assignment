@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { apiService } from '../services/api-service';
-import { AuthResponse } from '../types/responses/auth-response';
-import { LoginResponse } from '../types/responses/login-responses';
-import { LoginRequest } from '../types/requests/login-requests';
+import { AuthResponse, LoginResponse, LoginRequest } from './types';
 import { ToastAndroid } from 'react-native';
-import { User } from '../models/user';
+import { User } from '../../models/user';
+import { authService } from '../../services/auth-service';
 
 interface AuthState {
   user: User | null;
@@ -26,7 +24,7 @@ export const fetchProfile = createAsyncThunk<AuthResponse['data'], string>(
   'auth/fetchProfile',
   async (accessToken, { rejectWithValue }) => {
     try {
-      const response = await apiService.getUser(accessToken);
+      const response = await authService.getUser(accessToken);
       return response.data;
     } catch {
       return rejectWithValue('Failed to fetch user data');
@@ -38,7 +36,7 @@ export const loginUser = createAsyncThunk<LoginResponse['data'], LoginRequest>(
   'auth/loginUser',
   async (credentials, { rejectWithValue }) => {
     try {
-      const response = await apiService.login(credentials);
+      const response = await authService.login(credentials);
       return response.data;
     } catch {
       return rejectWithValue('Login failed. Please try again.');

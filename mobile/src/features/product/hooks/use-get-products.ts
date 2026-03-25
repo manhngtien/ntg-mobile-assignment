@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import { fetchProducts, selectProducts, selectProductsLoading, selectProductsError } from '../slices/product-slice';
-import { useAppDispatch, useAppSelector } from '../stores/store';
-import { selectAccessToken } from '../slices/auth-slice';
+import { fetchProducts, selectProducts, selectProductsLoading, selectProductsError } from '../product-slice';
+import { selectAccessToken } from '../../auth/auth-slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
-const useGetProducts = () => {
+export const useGetProducts = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectAccessToken);
   const products = useAppSelector(selectProducts);
@@ -18,5 +18,3 @@ const useGetProducts = () => {
 
   return { products, loading, error, getProducts };
 };
-
-export default useGetProducts;

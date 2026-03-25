@@ -1,15 +1,15 @@
 import { atoms } from '../styles/atoms';
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ProductCard } from '../components/ProductCard';
 import { theme } from '../styles/theme';
-import Background from '../components/Background';
+import { Background } from '../components/Background';
 import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { LoadingIndicator } from '../components/LoadingIndicator';
-import useGetProducts from '../hooks/use-get-products';
 import { useEffect } from 'react';
-import FilterChipList from '../components/FilterChipList';
+import { FilterChipList } from '../components/FilterChipList';
+import { useGetProducts } from '../features/product/hooks/use-get-products';
 
 interface HomeScreenProps {
 	navigation: any;

@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { selectIsAuthenticated, fetchProfile, selectLoading, selectUser, selectAccessToken } from '../slices/auth-slice';
-import { useAppDispatch, useAppSelector } from '../stores/store';
+import { fetchProfile, selectAccessToken, selectIsAuthenticated, selectLoading, selectUser } from '../auth-slice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
-const useAuth = () => {
+export const useAuth = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const loading = useAppSelector(selectLoading);
@@ -15,5 +15,3 @@ const useAuth = () => {
 
   return { user, loading, isAuthenticated, fetchAuthUser };
 };
-
-export default useAuth;
