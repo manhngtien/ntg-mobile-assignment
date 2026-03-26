@@ -3,15 +3,18 @@ import { LoginResponse, LoginRequest } from './types';
 import { User } from '../../models/user';
 import { authService } from '../../services/apis/auth-service';
 import { secureStorageService } from '../../services/secure-storage-service';
+import { databaseService } from '../../services/database-service';
 
 export const loginUser = createAsyncThunk<LoginResponse['data'], LoginRequest>(
   'auth/loginUser',
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await authService.login(credentials);
-      // Save token to secure storage
       if (response.data?.token) {
         await secureStorageService.saveToken(response.data.token);
+      }
+      if (response.data?.user) {
+        await databaseService.saveUser(response.data.user);
       }
       return response.data;
     } catch {
@@ -24,6 +27,7 @@ export const logoutUser = createAsyncThunk(
   'auth/logoutUser',
   async () => {
     await secureStorageService.removeToken();
+    await databaseService.deleteUser();
   }
 );
 
@@ -34,11 +38,13 @@ export const initializeAuth = createAsyncThunk<User | null, void>(
       const token = await secureStorageService.loadToken();
       if (token) {
         const response = await authService.getUser(token);
+        if (response.data) {
+          await databaseService.saveUser(response.data);
+        }
         return response.data;
       }
       return null;
     } catch {
-      // Token is invalid or expired, remove it
       await secureStorageService.removeToken();
       return null;
     }
