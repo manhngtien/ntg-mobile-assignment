@@ -1,24 +1,18 @@
 import * as React from 'react';
 import { atoms } from '../styles/atoms';
-import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { XStack } from '../components/XStack';
 
-interface FilterChip {
-  label: string;
-  color: string;
-}
-
 interface FilterChipListProps {
-  filterChips: FilterChip[];
+  filterChips: string[];
 }
-
-const categories = ["All Items", "Electronics", "Fashion", "Home", "Beauty", "Health", "Perfumes"];
 
 export function FilterChipList({
   filterChips,
 }: FilterChipListProps) {
   const [selectedChipIdx, setSelectedChipIdx] = React.useState(0);
 
+  // TODO
   const handleChipPress = (index: number) => {
     setSelectedChipIdx(index);
   };
@@ -33,7 +27,7 @@ export function FilterChipList({
           { borderBottomWidth: 2, borderBottomColor: '#F3F4F6' }
         ]}
       >
-        {categories.map((item, index) => (
+        {filterChips.map((item, index) => (
           <TouchableOpacity
             key={item}
             style={[

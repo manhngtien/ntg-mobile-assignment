@@ -8,10 +8,11 @@ export const useGetProducts = () => {
   const products = useAppSelector(selectProducts);
   const loading = useAppSelector(selectProductsLoading);
   const error = useAppSelector(selectProductsError);
+  const categories = products.map((product) => product.category);
 
   const getProducts = useCallback(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  return { products, loading, error, getProducts };
+  return { products, categories, loading, error, getProducts };
 };

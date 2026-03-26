@@ -16,7 +16,7 @@ interface HomeScreenProps {
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-	const { products, getProducts } = useGetProducts();
+	const { products, categories, getProducts } = useGetProducts();
 
 	useEffect(() => {
 		getProducts()
@@ -82,7 +82,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					</View>
 
 					{/* Categories */}
-					<FilterChipList filterChips={[]} />
+					<FilterChipList filterChips={categories} />
 				</YStack>
 
 				{/* Products */}

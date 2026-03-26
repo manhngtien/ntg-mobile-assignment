@@ -5,7 +5,6 @@ import FontAwesomeFreeSolid from "@react-native-vector-icons/fontawesome-free-so
 import { YStack } from "../components/YStack";
 import { XStack } from "../components/XStack";
 import { LoadingIndicator } from "../components/LoadingIndicator";
-import { useEffect } from "react";
 import { Background } from "../components/Background";
 import { useAuth } from "../features/auth/hooks/use-auth";
 import { useLogin } from "../features/auth/hooks/use-login";
@@ -15,14 +14,8 @@ interface ProfileScreenProps {
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
-	const { loading, isAuthenticated, user, fetchAuthUser } = useAuth();
+	const { user } = useAuth();
 	const { logout } = useLogin();
-
-	useEffect(() => {
-		if (!isAuthenticated) {
-			fetchAuthUser();
-		}
-	}, [fetchAuthUser, isAuthenticated]);
 
 	return (
 		<Background>
@@ -66,8 +59,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 					</TouchableOpacity>
 				</View>
 
-				{loading && <LoadingIndicator />}
-				{!loading && <ScrollView
+				<ScrollView
 					showsVerticalScrollIndicator={false}
 					style={[atoms.flex_1, atoms.p_4]}
 				>
@@ -319,7 +311,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 							</View>
 						</YStack>
 					</YStack>
-				</ScrollView>}
+				</ScrollView>
+
 			</View>
 		</Background>
 	);
