@@ -6,21 +6,25 @@ import { Background } from '../components/Background';
 import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
-import { LoadingIndicator } from '../components/LoadingIndicator';
 import { useEffect } from 'react';
 import { FilterChipList } from '../components/FilterChipList';
 import { useGetProducts } from '../features/product/hooks/use-get-products';
+import { useState } from 'react';
+import { LoadingIndicator } from '../components/LoadingIndicator';
+import { useGetCategories } from '../features/product/hooks/use-get-categories';
 
 interface HomeScreenProps {
 	navigation: any;
 }
 
 export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-	const { products, categories, getProducts } = useGetProducts();
+	const { loading, products, getProducts } = useGetProducts();
+	const { categories } = useGetCategories();
+	const [selectedCategory, setSelectedCategory] = useState<string>('');
 
 	useEffect(() => {
-		getProducts()
-	}, [getProducts])
+		getProducts(selectedCategory)
+	}, [selectedCategory])
 
 	return (
 		<Background>
@@ -82,7 +86,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					</View>
 
 					{/* Categories */}
-					<FilterChipList filterChips={categories} />
+					<FilterChipList
+						filterChips={categories}
+						handleChipPress={(x) => setSelectedCategory(x)}
+					/>
 				</YStack>
 
 				{/* Products */}
@@ -98,9 +105,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					ItemSeparatorComponent={<View style={[atoms.h_4]} />}
 					contentContainerStyle={[atoms.pb_10]}
 					ListEmptyComponent={
-						<YStack style={[atoms.pt_10]}>
-							<LoadingIndicator />
-						</YStack>
+						loading ?
+							<LoadingIndicator /> :
+							(<YStack style={[atoms.pt_10, atoms.items_center]}>
+								<Text>No products found</Text>
+							</YStack>)
 					}
 				/>
 			</YStack>

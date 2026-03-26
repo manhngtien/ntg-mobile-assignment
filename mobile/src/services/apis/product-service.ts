@@ -1,10 +1,15 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
 import { GetProductsResponse } from '../../features/product/types';
+import { secureStorageService } from '../secure-storage-service';
 
-const getProducts = async (accessToken: string): Promise<GetProductsResponse> => {
+const getProducts = async (category: string): Promise<GetProductsResponse> => {
+    var url = `${API_BASE_URL}/product/${category ? `?category=${encodeURIComponent(category)}` : ''}`
+
+    const accessToken = await secureStorageService.loadToken();
+
     var response = await axios.get<GetProductsResponse>(
-        `${API_BASE_URL}/product`,
+        url,
         {
             headers: { Authorization: `Bearer ${accessToken}` }
         })

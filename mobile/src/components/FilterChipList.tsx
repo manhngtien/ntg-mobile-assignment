@@ -5,17 +5,14 @@ import { XStack } from '../components/XStack';
 
 interface FilterChipListProps {
   filterChips: string[];
+  handleChipPress: (category: string) => void
 }
 
 export function FilterChipList({
   filterChips,
+  handleChipPress
 }: FilterChipListProps) {
-  const [selectedChipIdx, setSelectedChipIdx] = React.useState(0);
-
-  // TODO
-  const handleChipPress = (index: number) => {
-    setSelectedChipIdx(index);
-  };
+  const [selectedChip, setSelectedChip] = React.useState('');
 
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -27,7 +24,7 @@ export function FilterChipList({
           { borderBottomWidth: 2, borderBottomColor: '#F3F4F6' }
         ]}
       >
-        {filterChips.map((item, index) => (
+        {filterChips.map((item) => (
           <TouchableOpacity
             key={item}
             style={[
@@ -35,17 +32,26 @@ export function FilterChipList({
               atoms.px_4,
               atoms.py_2,
               {
-                backgroundColor: index === selectedChipIdx ? '#00C2C7' : '#F9FAFB'
+                backgroundColor: item === selectedChip ? '#00C2C7' : '#F9FAFB'
               }
             ]}
-            onPress={() => setSelectedChipIdx(index)}
+            onPress={() => {
+              if (item === selectedChip) {
+                setSelectedChip('')
+                handleChipPress('')
+              }
+              else {
+                setSelectedChip(item)
+                handleChipPress(item)
+              }
+            }}
           >
             <Text
               style={[
                 atoms.text_sm,
-                index === selectedChipIdx ? atoms.font_semibold : atoms.font_medium,
+                item === selectedChip ? atoms.font_semibold : atoms.font_medium,
                 {
-                  color: index === selectedChipIdx ? '#111827' : '#4B5563',
+                  color: item === selectedChip ? '#111827' : '#4B5563',
                 }
               ]}
             >

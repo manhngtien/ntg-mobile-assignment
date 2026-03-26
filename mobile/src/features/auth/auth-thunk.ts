@@ -35,15 +35,11 @@ export const initializeAuth = createAsyncThunk<User | null, void>(
   'auth/initializeAuth',
   async (_, { rejectWithValue }) => {
     try {
-      const token = await secureStorageService.loadToken();
-      if (token) {
-        const response = await authService.getUser(token);
-        if (response.data) {
-          await databaseService.saveUser(response.data);
-        }
-        return response.data;
+      const response = await authService.getUser();
+      if (response.data) {
+        await databaseService.saveUser(response.data);
       }
-      return null;
+      return response.data;
     } catch {
       await secureStorageService.removeToken();
       return null;
