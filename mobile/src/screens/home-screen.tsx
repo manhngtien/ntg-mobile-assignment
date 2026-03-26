@@ -99,8 +99,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 					numColumns={2}
 					keyExtractor={(item) => item.id.toString()}
 					columnWrapperStyle={[atoms.justify_between]}
-					renderItem={({ item, index }) =>
-						<ProductCard item={item} isRightItem={index % 2 === 1} />
+					renderItem={({ item }) =>
+						<ProductCard item={item} />
 					}
 					ItemSeparatorComponent={<View style={[atoms.h_4]} />}
 					contentContainerStyle={[atoms.pb_10]}

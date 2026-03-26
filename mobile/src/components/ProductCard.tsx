@@ -11,9 +11,9 @@ type ProductCardProps = {
   isRightItem?: boolean;
 };
 
-export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => {
+export const ProductCard = ({ item }: ProductCardProps) => {
   return (
-    <YStack gap={12} style={[atoms.flex_1, isRightItem ? { marginLeft: 8 } : { marginRight: 8 }]}>
+    <YStack gap={12} style={{ width: '48%' }}>
       <View>
         <Image source={{ uri: item.image }} style={{ height: 214, borderRadius: 12 }} />
         <TouchableOpacity style={[
