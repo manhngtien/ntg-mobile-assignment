@@ -1,5 +1,3 @@
-import { colors } from './colors';
+import { lightTheme } from "./light";
 
-export const theme = {
-  colors,
-};
+export const theme = lightTheme;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { atoms } from '../styles/atoms';
+import { theme } from '../styles/theme';
 
 export function Logo() {
 	return (
@@ -13,12 +14,12 @@ export function Logo() {
 				atoms.items_center,
 				atoms.justify_center,
 				{
-					backgroundColor: '#0DF2F21A',
+					backgroundColor: theme.colors.cyan_100,
 				}
 			]}
 		>
 			<Text>
-				<FontAwesomeFreeSolid name="shopping-bag" size={32} color="#0DF2F2" />
+				<FontAwesomeFreeSolid name="shopping-bag" size={32} color={theme.colors.cyan} />
 			</Text>
 		</View>
 	)

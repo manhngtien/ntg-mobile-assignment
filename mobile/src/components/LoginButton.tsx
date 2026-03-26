@@ -27,7 +27,7 @@ export function LoginButton({
         text: {
             fontSize: 14,
             lineHeight: 20,
-            color: '#000',
+            color: theme.colors.black,
             fontWeight: '500',
         },
     });

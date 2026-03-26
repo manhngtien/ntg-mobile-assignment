@@ -2,6 +2,7 @@ import * as React from 'react';
 import { atoms } from '../styles/atoms';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { XStack } from '../components/XStack';
+import { theme } from '../styles/theme';
 
 interface FilterChipListProps {
   filterChips: string[];
@@ -21,7 +22,7 @@ export function FilterChipList({
         style={[
           atoms.pb_3,
           atoms.px_4,
-          { borderBottomWidth: 2, borderBottomColor: '#F3F4F6' }
+          { borderBottomWidth: 2, borderBottomColor: theme.colors.gray_50 }
         ]}
       >
         {filterChips.map((item) => (
@@ -32,7 +33,7 @@ export function FilterChipList({
               atoms.px_4,
               atoms.py_2,
               {
-                backgroundColor: item === selectedChip ? '#00C2C7' : '#F9FAFB'
+                backgroundColor: item === selectedChip ? theme.colors.teal : theme.colors.gray_100
               }
             ]}
             onPress={() => {
@@ -51,7 +52,7 @@ export function FilterChipList({
                 atoms.text_sm,
                 item === selectedChip ? atoms.font_semibold : atoms.font_medium,
                 {
-                  color: item === selectedChip ? '#111827' : '#4B5563',
+                  color: item === selectedChip ? theme.colors.dark_200 : theme.colors.gray_600,
                 }
               ]}
             >

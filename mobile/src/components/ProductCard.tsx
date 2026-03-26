@@ -27,11 +27,11 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             position: 'absolute',
             top: 8,
             right: 8,
-            backgroundColor: '#FFFFFFCC',
+            backgroundColor: theme.colors.white_80,
           }]}
         >
           <Text>
-            <FontAwesomeFreeSolid name="heart" size={14} color="#4B5563" />
+            <FontAwesomeFreeSolid name="heart" size={14} color={theme.colors.gray_600} />
           </Text>
         </TouchableOpacity>
       </View>
@@ -43,7 +43,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             style={[
               atoms.text_sm,
               atoms.font_medium,
-              { color: '#111827' }
+              { color: theme.colors.dark_200 }
             ]}
           >
             {item.name}
@@ -52,7 +52,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             numberOfLines={1}
             style={[
               atoms.text_xs,
-              { color: '#6B7280' }
+              { color: theme.colors.gray_500 }
             ]}
           >
             {item.category}
@@ -64,7 +64,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             <Text style={[
               atoms.text_base,
               atoms.font_bold,
-              { color: '#111827' }]}
+              { color: theme.colors.dark_200 }]}
             >
               ${item.price.toFixed(2)}
             </Text>
@@ -72,7 +72,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
             {/* {item.oldPrice && (
               <Text style={[
                 atoms.text_xs2,
-                { lineHeight: 20, color: '#9CA3AF', textDecorationLine: 'line-through' }
+                { lineHeight: 20, color: theme.colors.gray_400, textDecorationLine: 'line-through' }
               ]}>
                 ${item.oldPrice.toFixed(2)}
               </Text>
@@ -86,7 +86,7 @@ export const ProductCard = ({ item, isRightItem = false }: ProductCardProps) => 
               atoms.justify_center,
               atoms.items_center,
               atoms.rounded_xl,
-              { backgroundColor: '#0DF2F2' }]}
+              { backgroundColor: theme.colors.cyan }]}
           >
             <Text style={[]}>
               <FontAwesomeFreeSolid name="plus" size={14} color={theme.colors.black} />

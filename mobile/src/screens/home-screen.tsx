@@ -47,10 +47,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 								atoms.justify_center,
 								atoms.items_center,
 								atoms.rounded_xl,
-								{ backgroundColor: '#F3F4F6' }]}
+								{ backgroundColor: theme.colors.gray_50 }]}
 							>
 								<Text>
-									<FontAwesomeFreeSolid name="bell" size={16} color={'#111827'} />
+									<FontAwesomeFreeSolid name="bell" size={16} color={theme.colors.dark_200} />
 								</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[
@@ -59,10 +59,10 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 								atoms.justify_center,
 								atoms.items_center,
 								atoms.rounded_xl,
-								{ backgroundColor: '#F3F4F6' }]}
+								{ backgroundColor: theme.colors.gray_50 }]}
 							>
 								<Text>
-									<FontAwesomeFreeSolid name="shopping-cart" size={16} color={'#111827'} />
+									<FontAwesomeFreeSolid name="shopping-cart" size={16} color={theme.colors.dark_200} />
 								</Text>
 							</TouchableOpacity>
 						</XStack>
@@ -79,7 +79,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 								atoms.px_3,
 								atoms.text_sm,
 								{
-									backgroundColor: '#F3F4F6'
+									backgroundColor: theme.colors.gray_50
 								}
 							]}
 						/>

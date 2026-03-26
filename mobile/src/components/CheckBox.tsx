@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     borderWidth: 1,
-    borderColor: '#D1D5DB',
+    borderColor: theme.colors.gray_200,
     borderRadius: 4,
   },
   checked: {

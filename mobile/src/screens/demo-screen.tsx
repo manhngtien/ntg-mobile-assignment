@@ -1,3 +1,4 @@
+import { theme } from "../styles/theme";
 import { FC } from "react"
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 
@@ -36,12 +37,12 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     bigBlue: {
-        color: 'blue',
+        color: theme.colors.cyan,
         fontWeight: 'bold',
         fontSize: 30,
     },
     red: {
-        color: 'red',
+        color: theme.colors.red_500,
     },
     image: {
         width: 300,

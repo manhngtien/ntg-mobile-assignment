@@ -1,3 +1,4 @@
+import { theme } from '../styles/theme';
 import React from 'react';
 import { View, Text, TextInput as Input, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
@@ -39,14 +40,14 @@ const styles = StyleSheet.create<ITexInputStyles>({
         lineHeight: 20,
         fontWeight: '500',
         marginBottom: 4,
-        color: '#374151'
+        color: theme.colors.gray_700
     },
     container: {
         width: '100%',
     },
     input: {
-        backgroundColor: 'white',
-        borderColor: '#D1D5DB',
+        backgroundColor: theme.colors.white,
+        borderColor: theme.colors.gray_200,
         paddingVertical: 10,
         paddingHorizontal: 16,
         borderRadius: 10,
@@ -54,12 +55,12 @@ const styles = StyleSheet.create<ITexInputStyles>({
     },
     description: {
         fontSize: 13,
-        color: 'gray',
+        color: theme.colors.gray_500,
         paddingTop: 8,
     },
     error: {
         fontSize: 13,
-        color: 'gray',
+        color: theme.colors.gray_500,
         paddingTop: 8,
     },
 });

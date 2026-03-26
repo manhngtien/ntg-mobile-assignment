@@ -43,7 +43,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 					atoms.shadow_md,
 					{
 						backgroundColor: theme.colors.white,
-						borderColor: '#F3F4F6',
+						borderColor: theme.colors.gray_50,
 					}
 				]}>
 					<YStack p={8} gap={32}>
@@ -53,13 +53,13 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 								<Text style={[atoms.text_xl2, atoms.font_bold, { lineHeight: 32 }]}>
 									Welcome back
 								</Text>
-								<Text style={[atoms.text_base, { color: "#6B7280", lineHeight: 24 }]}>
+								<Text style={[atoms.text_base, { color: theme.colors.gray_500, lineHeight: 24 }]}>
 									Please enter your details
 								</Text>
 							</YStack>
 						</YStack>
 
-						<XStack p={1} style={[atoms.items_stretch, atoms.rounded_xl, atoms.h_11, { backgroundColor: "#F3F4F6" }]}>
+						<XStack p={1} style={[atoms.items_stretch, atoms.rounded_xl, atoms.h_11, { backgroundColor: theme.colors.gray_50 }]}>
 							<LoginButton style={[atoms.flex_1]} isTouchable={false}>
 								<Text>Login</Text>
 							</LoginButton>
@@ -98,7 +98,7 @@ export const LogInScreen: FC<ILogInScreen> = ({ navigation }: any) => {
 
 							<XStack gap={8} style={[atoms.items_center]}>
 								<CheckBox />
-								<Text style={[atoms.text_sm, { color: "#4B5563" }]}>
+								<Text style={[atoms.text_sm, { color: theme.colors.gray_600 }]}>
 									Use biometrics for faster login
 								</Text>
 							</XStack>

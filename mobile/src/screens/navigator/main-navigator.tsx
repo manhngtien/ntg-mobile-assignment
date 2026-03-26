@@ -6,6 +6,7 @@ import { ProfileScreen } from '../profile-screen';
 import { Image, StyleSheet, Text } from 'react-native';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
 import { atoms } from '../../styles/atoms';
+import { theme } from '../../styles/theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,8 +19,8 @@ const MainNavigator: React.FC<IMainNavigator> = ({ navigation }) => {
 		<Tab.Navigator
 			screenOptions={{
 				headerShown: false,
-				tabBarActiveTintColor: "#0DF2F2",
-				tabBarInactiveTintColor: "#94A3B8"
+				tabBarActiveTintColor: theme.colors.cyan,
+				tabBarInactiveTintColor: theme.colors.slate_400
 			}}
 		>
 			<Tab.Screen name="Home" component={HomeScreen} options={{

@@ -19,7 +19,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 
 	return (
 		<Background>
-			<View style={[atoms.flex_1, { backgroundColor: '#F3F4F6' }]}>
+			<View style={[atoms.flex_1, { backgroundColor: theme.colors.gray_50 }]}>
 				{/* Header */}
 				<View style={[
 					atoms.flex_row,
@@ -30,21 +30,21 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 						position: 'relative',
 						backgroundColor: theme.colors.white,
 						borderBottomWidth: 1,
-						borderBottomColor: '#F3F4F6',
+						borderBottomColor: theme.colors.gray_50,
 					}
 				]}>
 					<TouchableOpacity
 						style={[atoms.h_10, atoms.w_10, atoms.justify_center, atoms.items_center]} onPress={() => { }}
 					>
 						<Text>
-							{/* <FontAwesomeFreeSolid name="chevron-left" size={20} color="#0F172A" /> */}
+							{/* <FontAwesomeFreeSolid name="chevron-left" size={20} color={theme.colors.dark_300} /> */}
 						</Text>
 					</TouchableOpacity>
 					<Text
 						style={[
 							atoms.text_lg,
 							atoms.font_semibold,
-							{ color: '#0F172A', lineHeight: 28 }
+							{ color: theme.colors.dark_300, lineHeight: 28 }
 						]}
 					>
 						Profile Settings
@@ -54,7 +54,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 						onPress={() => { }}
 					>
 						<Text>
-							<FontAwesomeFreeSolid name="gear" size={20} color="#0F172A" />
+							<FontAwesomeFreeSolid name="gear" size={20} color={theme.colors.dark_300} />
 						</Text>
 					</TouchableOpacity>
 				</View>
@@ -89,8 +89,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										atoms.rounded_full,
 										atoms.border_lg,
 										{
-											backgroundColor: '#e8f4f8',
-											borderColor: '#0DF2F233',
+											backgroundColor: theme.colors.cyan_50,
+											borderColor: theme.colors.cyan_200_20,
 											overflow: 'hidden',
 										}
 									]}
@@ -111,7 +111,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 											position: 'absolute',
 											bottom: 0,
 											right: 0,
-											backgroundColor: '#0DF2F2',
+											backgroundColor: theme.colors.cyan,
 											borderWidth: 2,
 											borderColor: theme.colors.white,
 										}
@@ -125,7 +125,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 								{user?.firstName} {user?.lastName}
 							</Text>
 							<Text
-								style={[atoms.text_sm, atoms.mb_2, { color: "#6B7280" }]}
+								style={[atoms.text_sm, atoms.mb_2, { color: theme.colors.gray_500 }]}
 							>
 								@{user?.username}
 							</Text>
@@ -134,9 +134,9 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 									atoms.px_3,
 									atoms.py_1,
 									atoms.rounded_full,
-									{ backgroundColor: '#0DF2F21A' }]}
+									{ backgroundColor: theme.colors.cyan_100 }]}
 							>
-								<Text style={[atoms.text_xs, atoms.font_bold, { color: '#0DF2F2' }]}>
+								<Text style={[atoms.text_xs, atoms.font_bold, { color: theme.colors.cyan }]}>
 									PREMIUM MEMBER
 								</Text>
 							</View>
@@ -163,14 +163,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 									atoms.text_lg,
 									atoms.font_semibold,
 									{
-										color: '#0F172A',
+										color: theme.colors.dark_300,
 									}
 								]}>
 									Account Details
 								</Text>
 								<TouchableOpacity onPress={() => { }}>
 									<Text
-										style={[atoms.text_sm, atoms.font_semibold, { color: '#0DF2F2' }]}
+										style={[atoms.text_sm, atoms.font_semibold, { color: theme.colors.cyan }]}
 									>
 										Edit Details
 									</Text>
@@ -179,7 +179,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 
 							<YStack gap={16}>
 								<YStack gap={4}>
-									<Text style={[atoms.text_xs, atoms.font_medium, { color: "#9CA3AF" }]}>
+									<Text style={[atoms.text_xs, atoms.font_medium, { color: theme.colors.gray_400 }]}>
 										EMAIL ADDRESS
 									</Text>
 									<View style={[
@@ -188,19 +188,19 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										atoms.px_3,
 										atoms.rounded_xl,
 										{
-											borderColor: '#E5E7EB',
-											backgroundColor: '#F9FAFB'
+											borderColor: theme.colors.gray_300,
+											backgroundColor: theme.colors.gray_100
 										}]}
 									>
 										<Text
-											style={[atoms.text_sm, { color: '#6B7280' }]}>
+											style={[atoms.text_sm, { color: theme.colors.gray_500 }]}>
 											{user?.email}
 										</Text>
 									</View>
 								</YStack>
 
 								<YStack gap={4}>
-									<Text style={[atoms.text_xs, atoms.font_medium, { color: "#9CA3AF" }]}>
+									<Text style={[atoms.text_xs, atoms.font_medium, { color: theme.colors.gray_400 }]}>
 										FIRST NAME
 									</Text>
 									<View style={[
@@ -208,14 +208,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										atoms.px_3,
 										atoms.rounded_xl,
 									]}>
-										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
+										<Text style={[atoms.text_sm, { color: theme.colors.dark_300 }]}>
 											{user?.firstName}
 										</Text>
 									</View>
 								</YStack>
 
 								<YStack gap={4}>
-									<Text style={[atoms.text_xs, atoms.font_medium, { color: "#9CA3AF" }]}>
+									<Text style={[atoms.text_xs, atoms.font_medium, { color: theme.colors.gray_400 }]}>
 										LAST NAME
 									</Text>
 									<View style={[
@@ -223,14 +223,14 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										atoms.px_3,
 										atoms.rounded_xl,
 									]}>
-										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
+										<Text style={[atoms.text_sm, { color: theme.colors.dark_300 }]}>
 											{user?.lastName}
 										</Text>
 									</View>
 								</YStack>
 
 								<YStack gap={4}>
-									<Text style={[atoms.text_xs, atoms.font_medium, { color: "#9CA3AF" }]}>
+									<Text style={[atoms.text_xs, atoms.font_medium, { color: theme.colors.gray_400 }]}>
 										AGE
 									</Text>
 									<View style={[
@@ -238,7 +238,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 										atoms.px_3,
 										atoms.rounded_xl,
 									]}>
-										<Text style={[atoms.text_sm, { color: '#0F172A' }]}>
+										<Text style={[atoms.text_sm, { color: theme.colors.dark_300 }]}>
 											{user?.age || 'N/A'}
 										</Text>
 									</View>
@@ -259,23 +259,23 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 								>
 									<XStack gap={12}>
 										<View
-											style={[atoms.h_8, atoms.w_8, atoms.justify_center, atoms.items_center, atoms.rounded_lg, { backgroundColor: '#F1F5F9' }]}
+											style={[atoms.h_8, atoms.w_8, atoms.justify_center, atoms.items_center, atoms.rounded_lg, { backgroundColor: theme.colors.slate_100 }]}
 										>
 											<Text>
-												<FontAwesomeFreeSolid name="shopping-bag" size={16} color="#374151" />
+												<FontAwesomeFreeSolid name="shopping-bag" size={16} color={theme.colors.gray_700} />
 											</Text>
 										</View>
 										<Text style={[
 											atoms.text_base,
 											atoms.font_medium,
-											{ color: '#374151' }
+											{ color: theme.colors.gray_700 }
 										]}
 										>
 											Order History
 										</Text>
 									</XStack>
 									<Text>
-										<FontAwesomeFreeSolid name="chevron-right" size={16} color="#D1D5DB" />
+										<FontAwesomeFreeSolid name="chevron-right" size={16} color={theme.colors.gray_200} />
 									</Text>
 								</TouchableOpacity>
 							</View>
@@ -292,16 +292,16 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
 								>
 									<XStack gap={12}>
 										<View
-											style={[atoms.h_8, atoms.w_8, atoms.justify_center, atoms.items_center, atoms.rounded_lg, { backgroundColor: '#FEF2F2' }]}
+											style={[atoms.h_8, atoms.w_8, atoms.justify_center, atoms.items_center, atoms.rounded_lg, { backgroundColor: theme.colors.red_50 }]}
 										>
 											<Text>
-												<FontAwesomeFreeSolid name="arrow-right-from-bracket" size={16} color="#EF4444" />
+												<FontAwesomeFreeSolid name="arrow-right-from-bracket" size={16} color={theme.colors.red_500} />
 											</Text>
 										</View>
 										<Text style={[
 											atoms.text_base,
 											atoms.font_medium,
-											{ color: '#EF4444' }
+											{ color: theme.colors.red_500 }
 										]}
 										>
 											Logout

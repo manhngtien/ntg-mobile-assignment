@@ -30,14 +30,14 @@ export function Button({ style, bg, textColor, loading, ...props }: IButtonProps
             {
                 loading ?
                     <ActivityIndicator
-                        color="#111827"
+                        color={theme.colors.dark_200}
                         size={24}
                     /> :
                     <Text style={[
                         atoms.font_bold,
                         atoms.text_base,
                         {
-                            color: textColor ?? "#111827",
+                            color: textColor ?? theme.colors.dark_200,
                             lineHeight: 24,
                         }]}
                     >

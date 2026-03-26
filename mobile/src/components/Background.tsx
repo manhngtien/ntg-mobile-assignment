@@ -2,6 +2,7 @@ import React from 'react';
 import { ImageBackground, KeyboardAvoidingView, StyleSheet, TextStyle, useWindowDimensions, ViewStyle } from 'react-native';
 import ImageAssets from '../assets/images';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { theme } from '../styles/theme';
 
 type IBackgroundStyles = {
 	safeArea: ViewStyle;
@@ -17,7 +18,7 @@ export function Background({ children }: any) {
 		<SafeAreaView
 			style={[
 				styles.safeArea,
-				{ height: height, backgroundColor: '#1F2937' }
+				{ height: height, backgroundColor: theme.colors.dark_100 }
 			]}
 			edges={['left', 'right', 'top']}
 		>
@@ -44,6 +45,6 @@ const styles = StyleSheet.create<IBackgroundStyles>({
 	},
 	container: {
 		flex: 1,
-		backgroundColor: '#F9FAFB',
+		backgroundColor: theme.colors.gray_100,
 	}
 });
