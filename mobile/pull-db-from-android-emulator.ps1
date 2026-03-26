@@ -1,0 +1,1 @@
+adb exec-out run-as com.reactnativestarter cat files/native_starter.db > native_starter.db
