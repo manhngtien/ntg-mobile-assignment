@@ -11,4 +11,18 @@ module.exports = {
 
   collectCoverage: true,
   coverageReporters: ['text', 'html'],
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/constants/**',
+    '!src/**/styles/**',
+    '!src/**/type.ts',
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
+    },
+  },
 };
