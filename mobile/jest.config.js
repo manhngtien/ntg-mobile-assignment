@@ -9,7 +9,6 @@ module.exports = {
     'node_modules/(?!(react-native|@react-native|@react-navigation|immer)/)'
   ],
 
-  collectCoverage: true,
   coverageReporters: ['text', 'html'],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
