@@ -8,11 +8,21 @@ const makeActionCreator = (type: string) => {
   return creator;
 };
 
+const makeRejectedActionCreator = (type: string) => {
+  const creator: any = (_error: any, _requestId?: string, arg?: any, payload?: any) => ({
+    type,
+    payload,
+    meta: { arg, requestId: _requestId ?? '' },
+  });
+  creator.type = type;
+  return creator;
+};
+
 jest.mock('./product-thunk', () => ({
   fetchProducts: Object.assign(jest.fn(), {
     pending: makeActionCreator('product/fetchProducts/pending'),
     fulfilled: makeActionCreator('product/fetchProducts/fulfilled'),
-    rejected: makeActionCreator('product/fetchProducts/rejected'),
+    rejected: makeRejectedActionCreator('product/fetchProducts/rejected'),
   }),
 }));
 
@@ -85,16 +95,16 @@ describe('productSlice', () => {
     });
 
     it('should set error and show toast on rejected', () => {
-      const state = productReducer(initialState, fetchProducts.rejected(Error(''), '', { category: 'Electronics' }));
+      const state = productReducer(initialState, fetchProducts.rejected(new Error(''), '', { category: 'Electronics' }));
       expect(state.loading).toBe(false);
-      expect(state.error).toBe('');
+      expect(state.error).toBeUndefined();
       expect(ToastAndroid.show).toHaveBeenCalledWith('Failed to fetch products. Please try again.', ToastAndroid.LONG);
     });
 
     it('should set error from rejectWithValue on rejected', () => {
       const state = productReducer(
         initialState,
-        fetchProducts.rejected(Error('Failed to fetch products. Please try again.'), '', { category: 'Electronics' })
+        fetchProducts.rejected(new Error(''), '', { category: 'Electronics' }, 'Failed to fetch products. Please try again.')
       );
       expect(state.loading).toBe(false);
       expect(state.error).toBe('Failed to fetch products. Please try again.');
