@@ -89,6 +89,7 @@ describe('ProfileScreen', () => {
       loading: false,
       isAuthenticated: true,
       fetchAuthUser: jest.fn(),
+      error: null,
     });
     mockUseLogin.mockReturnValue({
       user: null,
@@ -142,7 +143,7 @@ describe('ProfileScreen', () => {
   it('should render N/A when age is falsy', () => {
     mockUseAuth.mockReturnValue({
       user: { id: 1, username: 'testuser', email: 'test@test.com', age: 0, role: 'user', firstName: 'J', lastName: 'D', createdAt: '', updatedAt: '' },
-      loading: false, isAuthenticated: true, fetchAuthUser: jest.fn(),
+      loading: false, isAuthenticated: true, fetchAuthUser: jest.fn(), error: null,
     });
     const { getByText } = render(<ProfileScreen navigation={{ navigate: jest.fn() }} />);
     expect(getByText('N/A')).toBeTruthy();
@@ -181,7 +182,7 @@ describe('ProfileScreen', () => {
 
   it('should render with null user', () => {
     mockUseAuth.mockReturnValue({
-      user: null, loading: false, isAuthenticated: false, fetchAuthUser: jest.fn(),
+      user: null, loading: false, isAuthenticated: false, fetchAuthUser: jest.fn(), error: null,
     });
     const { getByText } = render(<ProfileScreen navigation={{ navigate: jest.fn() }} />);
     expect(getByText('Profile Settings')).toBeTruthy();

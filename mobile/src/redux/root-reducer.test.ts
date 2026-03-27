@@ -45,6 +45,7 @@ describe('rootReducer', () => {
       loading: false,
       isAuthenticated: null,
       isLoginSuccess: null,
+      error: null,
     });
   });
 

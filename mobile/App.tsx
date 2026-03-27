@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import { useAuth } from './src/features/auth/hooks/use-auth';
 import { useEffect } from 'react';
-import { LoadingIndicator } from './src/components/LoadingIndicator';
+import { ToastAndroid } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,17 +19,15 @@ const App = () => {
 };
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, loading, fetchAuthUser } = useAuth();
+  const { isAuthenticated, error, fetchAuthUser } = useAuth();
 
   useEffect(() => {
     fetchAuthUser();
   }, [fetchAuthUser]);
 
-  if (loading) {
-    return (
-      <LoadingIndicator />
-    );
-  }
+  useEffect(() => {
+    error && ToastAndroid.show(error, ToastAndroid.LONG);
+  }, [error]);
 
   return (
     <NavigationContainer>

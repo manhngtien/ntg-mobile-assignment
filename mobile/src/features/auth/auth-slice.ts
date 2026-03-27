@@ -8,13 +8,15 @@ interface AuthState {
   loading: boolean;
   isAuthenticated: boolean | null;
   isLoginSuccess: boolean | null;
+  error: string | null;
 }
 
 const initialState: AuthState = {
   user: null,
   loading: false,
   isAuthenticated: null,
-  isLoginSuccess: null
+  isLoginSuccess: null,
+  error: null,
 };
 
 export const authSlice = createSlice({
@@ -37,6 +39,7 @@ export const authSlice = createSlice({
       .addCase(initializeAuth.rejected, (state) => {
         state.loading = false;
         state.isAuthenticated = false;
+        state.error = 'Failed to initialize auth';
       })
 
       // loginUser cases
@@ -52,6 +55,8 @@ export const authSlice = createSlice({
       .addCase(loginUser.rejected, (state) => {
         state.loading = false;
         state.isLoginSuccess = false;
+        state.isAuthenticated = false;
+        state.error = 'Failed to login';
       })
 
       // logoutUser cases
@@ -68,5 +73,6 @@ export const selectUser = (state: { auth: AuthState }) => state.auth.user;
 export const selectLoading = (state: { auth: AuthState }) => state.auth.loading;
 export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
 export const selectIsLoginSuccess = (state: { auth: AuthState }) => state.auth.isLoginSuccess;
+export const selectError = (state: { auth: AuthState }) => state.auth.error;
 
 export default authSlice.reducer;

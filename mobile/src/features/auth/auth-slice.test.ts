@@ -57,6 +57,7 @@ describe('authSlice', () => {
     loading: false,
     isAuthenticated: null,
     isLoginSuccess: null,
+    error: null,
   };
 
   describe('initial state', () => {
@@ -122,6 +123,7 @@ describe('authSlice', () => {
         loading: false,
         isAuthenticated: true,
         isLoginSuccess: true,
+        error: null,
       };
       const state = authReducer(loggedInState, logoutUser.fulfilled(undefined, '', undefined));
       expect(state.user).toBeNull();
@@ -137,6 +139,7 @@ describe('authSlice', () => {
         loading: true,
         isAuthenticated: true,
         isLoginSuccess: true,
+        error: null,
       },
     };
 

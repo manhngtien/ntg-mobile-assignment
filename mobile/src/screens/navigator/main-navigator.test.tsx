@@ -117,6 +117,7 @@ describe('MainNavigator', () => {
       loading: false,
       isAuthenticated: false,
       fetchAuthUser: jest.fn(),
+      error: null,
     });
   });
 
