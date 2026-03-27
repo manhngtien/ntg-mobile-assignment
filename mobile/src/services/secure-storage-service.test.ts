@@ -25,9 +25,12 @@ describe('secureStorageService', () => {
     });
 
     it('should return false on error', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       (mockKeychain.setGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.saveToken('my-token');
       expect(result).toBe(false);
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to save token to keychain:', expect.any(Error));
+      consoleSpy.mockRestore();
     });
   });
 
@@ -45,9 +48,12 @@ describe('secureStorageService', () => {
     });
 
     it('should return null on error', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       (mockKeychain.getGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.loadToken();
       expect(result).toBeNull();
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to load token from keychain:', expect.any(Error));
+      consoleSpy.mockRestore();
     });
   });
 
@@ -59,9 +65,12 @@ describe('secureStorageService', () => {
     });
 
     it('should return false on error', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       (mockKeychain.resetGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.removeToken();
       expect(result).toBe(false);
+      expect(consoleSpy).toHaveBeenCalledWith('Failed to remove token from keychain:', expect.any(Error));
+      consoleSpy.mockRestore();
     });
   });
 });
