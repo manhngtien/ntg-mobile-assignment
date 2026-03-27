@@ -25,6 +25,7 @@ describe('databaseService', () => {
   });
 
   it('should call open and create table on first getDB', async () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     const { open } = require('react-native-nitro-sqlite');
     const freshMockDb = { executeAsync: jest.fn().mockResolvedValue({ results: [] }) };
     (open as jest.Mock).mockReturnValue(freshMockDb);
@@ -33,9 +34,12 @@ describe('databaseService', () => {
     const user = { id: 1, username: 'test', email: 'test@test.com', age: 25, role: 'user', firstName: 'T', lastName: 'U', createdAt: '', updatedAt: '' };
     await service.saveUser(user);
     expect(freshMockDb.executeAsync).toHaveBeenCalled();
+    expect(consoleSpy).toHaveBeenCalledWith('User saved successfully');
+    consoleSpy.mockRestore();
   });
 
   it('should reuse cached db on second call', async () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     const { open } = require('react-native-nitro-sqlite');
     const freshMockDb = { executeAsync: jest.fn().mockResolvedValue({ results: [] }) };
     (open as jest.Mock).mockReturnValue(freshMockDb);
@@ -45,6 +49,9 @@ describe('databaseService', () => {
     await service.saveUser(user);
     await service.saveUser(user);
     expect(open).toHaveBeenCalledTimes(1);
+    expect(consoleSpy).toHaveBeenCalledWith('User saved successfully');
+    expect(consoleSpy).toHaveBeenCalledTimes(2);
+    consoleSpy.mockRestore();
   });
 
   it('should return user from results', async () => {
@@ -79,6 +86,7 @@ describe('databaseService', () => {
   });
 
   it('should handle saveUser error gracefully', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     const { open } = require('react-native-nitro-sqlite');
     let callCount = 0;
     const freshMockDb = {
@@ -95,5 +103,7 @@ describe('databaseService', () => {
     const service = require('./database-service').databaseService;
     const user = { id: 1, username: 'test', email: 'test@test.com', age: 25, role: 'user', firstName: 'T', lastName: 'U', createdAt: '', updatedAt: '' };
     await expect(service.saveUser(user)).resolves.not.toThrow();
+    expect(consoleSpy).toHaveBeenCalledWith('Error saving user:', expect.any(Error));
+    consoleSpy.mockRestore();
   });
 });
