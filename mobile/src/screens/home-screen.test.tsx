@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -43,6 +43,46 @@ jest.mock('../features/product/hooks/use-get-categories', () => ({
   useGetCategories: jest.fn(),
 }));
 
+jest.mock('../components/ProductCard', () => {
+  const React = require('react');
+  const { Text, TouchableOpacity } = require('react-native');
+  return {
+    ProductCard: ({ item }: any) => (
+      React.createElement(TouchableOpacity, { testID: `product-card-${item.id}` },
+        React.createElement(Text, null, item.name)
+      )
+    ),
+  };
+});
+
+jest.mock('../components/Background', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    Background: ({ children }: any) => React.createElement(View, { testID: 'background' }, children),
+  };
+});
+
+jest.mock('../components/FilterChipList', () => {
+  const React = require('react');
+  const { View, Text, TouchableOpacity } = require('react-native');
+  return {
+    FilterChipList: ({ filterChips, handleChipPress }: any) => (
+      React.createElement(View, { testID: 'filter-chip-list' },
+        filterChips.map((chip: string) =>
+          React.createElement(TouchableOpacity, {
+            key: chip,
+            testID: `filter-chip-${chip}`,
+            onPress: () => handleChipPress(chip),
+          },
+            React.createElement(Text, null, chip)
+          )
+        )
+      )
+    ),
+  };
+});
+
 import { useGetProducts } from '../features/product/hooks/use-get-products';
 import { useGetCategories } from '../features/product/hooks/use-get-categories';
 import { HomeScreen } from '../screens/home-screen';
@@ -58,13 +98,15 @@ const mockProducts = [
 ];
 
 describe('HomeScreen', () => {
+  const mockGetProducts = jest.fn();
+
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseGetProducts.mockReturnValue({
       products: mockProducts,
       loading: false,
       error: null,
-      getProducts: jest.fn(),
+      getProducts: mockGetProducts,
       categories: ['Cat1'],
     });
     mockUseGetCategories.mockReturnValue({
@@ -93,7 +135,7 @@ describe('HomeScreen', () => {
       products: [],
       loading: false,
       error: null,
-      getProducts: jest.fn(),
+      getProducts: mockGetProducts,
       categories: [],
     });
     const { getByText } = render(<HomeScreen navigation={{}} />);
@@ -105,16 +147,16 @@ describe('HomeScreen', () => {
       products: [],
       loading: true,
       error: null,
-      getProducts: jest.fn(),
+      getProducts: mockGetProducts,
       categories: [],
     });
     const { toJSON } = render(<HomeScreen navigation={{}} />);
     expect(toJSON()).toBeTruthy();
   });
 
-  it('should render search input', () => {
-    const { toJSON } = render(<HomeScreen navigation={{}} />);
-    expect(toJSON()).toBeTruthy();
+  it('should render search input with placeholder', () => {
+    const { getByPlaceholderText } = render(<HomeScreen navigation={{}} />);
+    expect(getByPlaceholderText('Search products, brands...')).toBeTruthy();
   });
 
   it('should render product with multiple items', () => {
@@ -125,11 +167,80 @@ describe('HomeScreen', () => {
       ],
       loading: false,
       error: null,
-      getProducts: jest.fn(),
+      getProducts: mockGetProducts,
       categories: [],
     });
     const { getByText } = render(<HomeScreen navigation={{}} />);
     expect(getByText('Prod A')).toBeTruthy();
     expect(getByText('Prod B')).toBeTruthy();
+  });
+
+  it('should call getProducts on mount', () => {
+    render(<HomeScreen navigation={{}} />);
+    expect(mockGetProducts).toHaveBeenCalledWith('');
+  });
+
+  it('should call getProducts when category is selected', () => {
+    const { getByTestId } = render(<HomeScreen navigation={{}} />);
+    fireEvent.press(getByTestId('filter-chip-Cat1'));
+    expect(mockGetProducts).toHaveBeenCalledWith('Cat1');
+  });
+
+  it('should render Background component', () => {
+    const { getByTestId } = render(<HomeScreen navigation={{}} />);
+    expect(getByTestId('background')).toBeTruthy();
+  });
+
+  it('should render FilterChipList with categories', () => {
+    const { getByTestId } = render(<HomeScreen navigation={{}} />);
+    expect(getByTestId('filter-chip-list')).toBeTruthy();
+    expect(getByTestId('filter-chip-Cat1')).toBeTruthy();
+    expect(getByTestId('filter-chip-Cat2')).toBeTruthy();
+  });
+
+  it('should render ProductCard for each product', () => {
+    mockUseGetProducts.mockReturnValue({
+      products: [
+        { id: 1, name: 'Prod A', description: '', image: '', price: 5, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
+        { id: 2, name: 'Prod B', description: '', image: '', price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
+      ],
+      loading: false,
+      error: null,
+      getProducts: mockGetProducts,
+      categories: [],
+    });
+    const { getByTestId } = render(<HomeScreen navigation={{}} />);
+    expect(getByTestId('product-card-1')).toBeTruthy();
+    expect(getByTestId('product-card-2')).toBeTruthy();
+  });
+
+  it('should render with empty categories', () => {
+    mockUseGetCategories.mockReturnValue({ categories: [] });
+    const { getByText } = render(<HomeScreen navigation={{}} />);
+    expect(getByText('Discover')).toBeTruthy();
+  });
+
+  it('should render with error state', () => {
+    mockUseGetProducts.mockReturnValue({
+      products: [],
+      loading: false,
+      error: 'Failed to fetch',
+      getProducts: mockGetProducts,
+      categories: [],
+    });
+    const { getByText } = render(<HomeScreen navigation={{}} />);
+    expect(getByText('No products found')).toBeTruthy();
+  });
+
+  it('should render loading state with existing products', () => {
+    mockUseGetProducts.mockReturnValue({
+      products: mockProducts,
+      loading: true,
+      error: null,
+      getProducts: mockGetProducts,
+      categories: ['Cat1'],
+    });
+    const { getByText } = render(<HomeScreen navigation={{}} />);
+    expect(getByText('Product 1')).toBeTruthy();
   });
 });

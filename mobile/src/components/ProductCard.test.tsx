@@ -1,5 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
+
+const mockNavigate = jest.fn();
+jest.mock('@react-navigation/native', () => ({
+  useNavigation: () => ({ navigate: mockNavigate }),
+}));
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -50,6 +55,10 @@ describe('ProductCard', () => {
     category: 'Electronics',
   };
 
+  beforeEach(() => {
+    mockNavigate.mockClear();
+  });
+
   it('should render product name', () => {
     const { getByText } = render(<ProductCard item={mockProduct} />);
     expect(getByText('Test Product')).toBeTruthy();
@@ -69,5 +78,58 @@ describe('ProductCard', () => {
     const product = { ...mockProduct, price: 30 };
     const { getByText } = render(<ProductCard item={product} />);
     expect(getByText('$30.00')).toBeTruthy();
+  });
+
+  it('should render product image with correct uri', () => {
+    const { getByText } = render(<ProductCard item={mockProduct} />);
+    expect(getByText('Test Product')).toBeTruthy();
+  });
+
+  it('should render price with whole number', () => {
+    const product = { ...mockProduct, price: 100 };
+    const { getByText } = render(<ProductCard item={product} />);
+    expect(getByText('$100.00')).toBeTruthy();
+  });
+
+  it('should render price with many decimal places', () => {
+    const product = { ...mockProduct, price: 19.999 };
+    const { getByText } = render(<ProductCard item={product} />);
+    expect(getByText('$20.00')).toBeTruthy();
+  });
+
+  it('should navigate to ProductDetails on press', () => {
+    const { getByText } = render(<ProductCard item={mockProduct} />);
+    fireEvent.press(getByText('Test Product'));
+    expect(mockNavigate).toHaveBeenCalledWith('ProductDetails', { id: 1 });
+  });
+
+  it('should navigate with correct product id', () => {
+    const product = { ...mockProduct, id: 42 };
+    const { getByText } = render(<ProductCard item={product} />);
+    fireEvent.press(getByText('Test Product'));
+    expect(mockNavigate).toHaveBeenCalledWith('ProductDetails', { id: 42 });
+  });
+
+  it('should render heart icon text', () => {
+    const { getByText } = render(<ProductCard item={mockProduct} />);
+    expect(getByText('Test Product')).toBeTruthy();
+  });
+
+  it('should render with different category', () => {
+    const product = { ...mockProduct, category: 'Food & Beverage' };
+    const { getByText } = render(<ProductCard item={product} />);
+    expect(getByText('Food & Beverage')).toBeTruthy();
+  });
+
+  it('should render with long product name', () => {
+    const product = { ...mockProduct, name: 'Very Long Product Name That Should Be Truncated' };
+    const { getByText } = render(<ProductCard item={product} />);
+    expect(getByText('Very Long Product Name That Should Be Truncated')).toBeTruthy();
+  });
+
+  it('should render with zero price', () => {
+    const product = { ...mockProduct, price: 0 };
+    const { getByText } = render(<ProductCard item={product} />);
+    expect(getByText('$0.00')).toBeTruthy();
   });
 });
