@@ -1,9 +1,10 @@
-import { fetchProducts } from './product-thunk';
+import { fetchProducts, fetchProductById } from './product-thunk';
 import { productService } from '../../services/apis/product-service';
 
 jest.mock('../../services/apis/product-service', () => ({
   productService: {
     getProducts: jest.fn(),
+    getProductById: jest.fn(),
   },
 }));
 
@@ -73,6 +74,41 @@ describe('productThunk', () => {
 
       expect(result.type).toBe('product/fetchProducts/rejected');
       expect(result.payload).toBe('Failed to fetch products. Please try again.');
+    });
+  });
+
+  describe('fetchProductById', () => {
+    it('should return product on success', async () => {
+      mockProductService.getProductById.mockResolvedValue(mockProducts[0]);
+
+      const dispatch = jest.fn();
+      const thunk = fetchProductById(1);
+      const result = await thunk(dispatch, () => { }, undefined);
+
+      expect(mockProductService.getProductById).toHaveBeenCalledWith(1);
+      expect(result.payload).toEqual(mockProducts[0]);
+      expect(result.type).toBe('product/fetchProductById/fulfilled');
+    });
+
+    it('should call getProductById with correct id', async () => {
+      mockProductService.getProductById.mockResolvedValue(mockProducts[1]);
+
+      const dispatch = jest.fn();
+      const thunk = fetchProductById(2);
+      await thunk(dispatch, () => { }, undefined);
+
+      expect(mockProductService.getProductById).toHaveBeenCalledWith(2);
+    });
+
+    it('should reject with error message on failure', async () => {
+      mockProductService.getProductById.mockRejectedValue(new Error('Network error'));
+
+      const dispatch = jest.fn();
+      const thunk = fetchProductById(1);
+      const result = await thunk(dispatch, () => { }, undefined);
+
+      expect(result.type).toBe('product/fetchProductById/rejected');
+      expect(result.payload).toBe('Failed to fetch product. Please try again.');
     });
   });
 });

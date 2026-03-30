@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
-import { GetProductsResponse } from '../../features/product/types';
+import { GetProductByIdResponse, GetProductsResponse } from '../../features/product/types';
+import { Product } from '../../models/product';
 import { secureStorageService } from '../secure-storage-service';
 
 const getProducts = async (category: string): Promise<GetProductsResponse> => {
@@ -16,6 +17,19 @@ const getProducts = async (category: string): Promise<GetProductsResponse> => {
     return response.data!;
 };
 
+const getProductById = async (id: number): Promise<GetProductByIdResponse> => {
+    const accessToken = await secureStorageService.loadToken();
+
+    const response = await axios.get<GetProductByIdResponse>(
+        `${API_BASE_URL}/product/${id}`,
+        {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        }
+    )
+    return response.data!;
+};
+
 export const productService = {
-    getProducts
+    getProducts,
+    getProductById
 };

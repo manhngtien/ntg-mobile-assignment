@@ -16,7 +16,7 @@ type ProductCardProps = {
 export const ProductCard = ({ item }: ProductCardProps) => {
   const { navigate } = useNavigation<AppNavigation>();
   const onPress = () => {
-    navigate('ProductDetails', { id: 1 });
+    navigate('ProductDetails', { id: item.id });
   };
 
   return (

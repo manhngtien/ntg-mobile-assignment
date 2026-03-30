@@ -24,6 +24,11 @@ jest.mock('./product-thunk', () => ({
     fulfilled: makeActionCreator('product/fetchProducts/fulfilled'),
     rejected: makeRejectedActionCreator('product/fetchProducts/rejected'),
   }),
+  fetchProductById: Object.assign(jest.fn(), {
+    pending: makeActionCreator('product/fetchProductById/pending'),
+    fulfilled: makeActionCreator('product/fetchProductById/fulfilled'),
+    rejected: makeRejectedActionCreator('product/fetchProductById/rejected'),
+  }),
 }));
 
 jest.mock('react-native', () => ({
@@ -32,10 +37,11 @@ jest.mock('react-native', () => ({
 
 import productReducer, {
   selectProducts,
+  selectSelectedProduct,
   selectProductsLoading,
   selectProductsError,
 } from './product-slice';
-import { fetchProducts } from './product-thunk';
+import { fetchProducts, fetchProductById } from './product-thunk';
 import { ToastAndroid } from 'react-native';
 
 const mockProducts = [
@@ -66,6 +72,7 @@ const mockProducts = [
 describe('productSlice', () => {
   const initialState = {
     products: [],
+    selectedProduct: null,
     loading: false,
     error: null,
   };
@@ -111,10 +118,43 @@ describe('productSlice', () => {
     });
   });
 
+  describe('fetchProductById', () => {
+    it('should set loading to true, clear error and selectedProduct on pending', () => {
+      const prevState = { ...initialState, error: 'previous error', selectedProduct: mockProducts[0] };
+      const state = productReducer(prevState, fetchProductById.pending('', 1));
+      expect(state.loading).toBe(true);
+      expect(state.error).toBeNull();
+      expect(state.selectedProduct).toBeNull();
+    });
+
+    it('should set selectedProduct on fulfilled', () => {
+      const state = productReducer(initialState, fetchProductById.fulfilled(mockProducts[0], '', 1));
+      expect(state.loading).toBe(false);
+      expect(state.selectedProduct).toEqual(mockProducts[0]);
+    });
+
+    it('should set error and show toast on rejected', () => {
+      const state = productReducer(initialState, fetchProductById.rejected(new Error(''), '', 1));
+      expect(state.loading).toBe(false);
+      expect(state.error).toBeUndefined();
+      expect(ToastAndroid.show).toHaveBeenCalledWith('Failed to fetch product. Please try again.', ToastAndroid.LONG);
+    });
+
+    it('should set error from rejectWithValue on rejected', () => {
+      const state = productReducer(
+        initialState,
+        fetchProductById.rejected(new Error(''), '', 1, 'Failed to fetch product. Please try again.')
+      );
+      expect(state.loading).toBe(false);
+      expect(state.error).toBe('Failed to fetch product. Please try again.');
+    });
+  });
+
   describe('selectors', () => {
     const mockState = {
       product: {
         products: mockProducts,
+        selectedProduct: mockProducts[0],
         loading: true,
         error: 'Something went wrong',
       },
@@ -122,6 +162,10 @@ describe('productSlice', () => {
 
     it('selectProducts should return products', () => {
       expect(selectProducts(mockState)).toEqual(mockProducts);
+    });
+
+    it('selectSelectedProduct should return selectedProduct', () => {
+      expect(selectSelectedProduct(mockState)).toEqual(mockProducts[0]);
     });
 
     it('selectProductsLoading should return loading', () => {

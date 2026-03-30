@@ -1,12 +1,14 @@
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import { Image, ImageStyle, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Background } from '../components/Background';
 import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
+import { useGetProductById } from '../features/product/hooks/use-get-product-by-id';
 import { atoms } from '../styles/atoms';
 import { theme } from '../styles/theme';
+import { RootStackParamList } from '../types/app-navigation';
 
 const features = [
   { label: 'Heart Rate', value: '72 bpm' },
@@ -27,7 +29,14 @@ const reviews = [
 ];
 
 export const ProductDetailsScreen = () => {
+  const route = useRoute();
+  const { id } = route.params as RootStackParamList['ProductDetails'];
   const { goBack } = useNavigation();
+  const { selectedProduct, getProductById } = useGetProductById();
+
+  useEffect(() => {
+    getProductById(id);
+  }, [id, getProductById]);
 
   const handleBackPress = () => {
     goBack();
@@ -100,7 +109,7 @@ export const ProductDetailsScreen = () => {
               >
                 <Image
                   source={{
-                    uri: 'https://images.unsplash.com/photo-1774423864905-dd93b4ca6fca?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                    uri: selectedProduct?.image,
                   }}
                   style={[atoms.w_full as ImageStyle, atoms.flex_1 as ImageStyle]}
                   resizeMode="cover"
@@ -108,16 +117,16 @@ export const ProductDetailsScreen = () => {
               </View>
 
               <YStack gap={8} style={[atoms.px_4, atoms.py_6]}>
-                <Text style={[atoms.text_xl2, atoms.font_bold]}>Quantum Pro Smartwatch</Text>
+                <Text style={[atoms.text_xl2, atoms.font_bold]}>{selectedProduct?.name}</Text>
                 <XStack gap={8} style={[atoms.items_end]}>
-                  <Text style={[atoms.text_xl3, atoms.font_bold]}>$299.00</Text>
+                  <Text style={[atoms.text_xl3, atoms.font_bold]}>${selectedProduct?.price}</Text>
                   <Text
                     style={[
                       atoms.text_lg,
                       { textDecorationLine: 'line-through', color: theme.colors.gray_400 },
                     ]}
                   >
-                    $349.00
+                    ${selectedProduct?.price ?? 0 + 100}
                   </Text>
                 </XStack>
               </YStack>
@@ -174,10 +183,7 @@ export const ProductDetailsScreen = () => {
               ]}
             >
               <Text style={[atoms.font_semibold, atoms.text_lg]}>Product Description</Text>
-              <Text style={[{ color: theme.colors.dark_200 }]}>
-                Experience the future on your wrist. The Quantum Pro Smartwatch combines sleek
-                design with cutting-edge technology.
-              </Text>
+              <Text style={[{ color: theme.colors.dark_200 }]}>{selectedProduct?.description}</Text>
               <TouchableOpacity>
                 <Text style={[atoms.font_semibold, atoms.text_sm, { color: theme.colors.cyan }]}>
                   Read more...

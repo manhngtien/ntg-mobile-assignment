@@ -13,3 +13,15 @@ export const fetchProducts = createAsyncThunk<Product[], { category: string }>(
     }
   }
 );
+
+export const fetchProductById = createAsyncThunk<Product | null, number>(
+  'product/fetchProductById',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await productService.getProductById(id);
+      return response.data ?? null;
+    } catch (error: any) {
+      return rejectWithValue('Failed to fetch product. Please try again.');
+    }
+  }
+);
