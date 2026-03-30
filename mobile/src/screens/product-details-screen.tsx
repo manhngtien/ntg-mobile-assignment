@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { Image, ImageStyle, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Background } from '../components/Background';
+import { StarRating } from '../components/StarRating';
 import { XStack } from '../components/XStack';
 import { YStack } from '../components/YStack';
 import { useGetProductById } from '../features/product/hooks/use-get-product-by-id';
@@ -114,6 +115,14 @@ export const ProductDetailsScreen = () => {
 
               <YStack gap={8} style={[atoms.px_4, atoms.py_6]}>
                 <Text style={[atoms.text_xl2, atoms.font_bold]}>{selectedProduct?.name}</Text>
+
+                <XStack gap={8}>
+                  <StarRating rating={4.2} />
+                  <Text style={[atoms.text_sm, { color: theme.colors.gray_500 }]}>
+                    (128 Reviews)
+                  </Text>
+                </XStack>
+
                 <XStack gap={8} style={[atoms.items_end]}>
                   <Text style={[atoms.text_xl3, atoms.font_bold]}>${selectedProduct?.price}</Text>
                   <Text
@@ -122,7 +131,7 @@ export const ProductDetailsScreen = () => {
                       { textDecorationLine: 'line-through', color: theme.colors.gray_400 },
                     ]}
                   >
-                    ${selectedProduct?.price ?? 0 + 100}
+                    ${200.55}
                   </Text>
                 </XStack>
               </YStack>
