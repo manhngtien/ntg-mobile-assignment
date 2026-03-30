@@ -4,6 +4,7 @@ type IFlexStyles = {
   flex_1: ViewStyle;
   flex_row: ViewStyle;
   flex_col: ViewStyle;
+  flex_wrap: ViewStyle;
   justify_center: ViewStyle;
   justify_between: ViewStyle;
   items_center: ViewStyle;
@@ -21,6 +22,9 @@ export const flex = StyleSheet.create<IFlexStyles>({
   },
   flex_col: {
     flexDirection: 'column',
+  },
+  flex_wrap: {
+    flexWrap: 'wrap'
   },
   justify_center: {
     justifyContent: 'center',

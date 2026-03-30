@@ -1,12 +1,13 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogInScreen } from './src/screens/login-screen';
-import MainNavigator from './src/screens/navigator/main-navigator';
-import { Provider } from 'react-redux';
-import store from './src/redux/store';
-import { useAuth } from './src/features/auth/hooks/use-auth';
 import { useEffect } from 'react';
 import { ToastAndroid } from 'react-native';
+import { Provider } from 'react-redux';
+import { useAuth } from './src/features/auth/hooks/use-auth';
+import store from './src/redux/store';
+import { LogInScreen } from './src/screens/login-screen';
+import MainNavigator from './src/screens/navigator/main-navigator';
+import { ProductDetailsScreen } from './src/screens/product-details-screen';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,21 +34,20 @@ const AppContent: React.FC = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {isAuthenticated ? (
-          <Stack.Screen
-            name="Main"
-            component={MainNavigator}
-            options={{ headerShown: false }}
-          />
+          <>
+            <Stack.Screen name="Main" component={MainNavigator} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="ProductDetails"
+              component={ProductDetailsScreen}
+              options={{ headerShown: false }}
+            />
+          </>
         ) : (
-          <Stack.Screen
-            name="LogIn"
-            component={LogInScreen}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="LogIn" component={LogInScreen} options={{ headerShown: false }} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
-  )
-}
+  );
+};
 
 export default App;

@@ -44,9 +44,11 @@ export const fonts = StyleSheet.create<IFontStyles>({
   },
   text_xl2: {
     fontSize: 24,
+    lineHeight: 32,
   },
   text_xl3: {
     fontSize: 30,
+    lineHeight: 36,
   },
   font_light: {
     fontWeight: '300',
