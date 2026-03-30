@@ -15,7 +15,14 @@ jest.mock('react-native-safe-area-context', () => {
   };
 });
 
-jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => 'FontAwesomeFreeSolid');
+jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ name }: any) => React.createElement(Text, { testID: `icon-${name}` }, name),
+  };
+});
 
 jest.mock('../styles/theme', () => ({
   theme: {
@@ -150,12 +157,10 @@ describe('ProductDetailsScreen', () => {
   });
 
   it('should call goBack when back button is pressed', () => {
-    const { container } = render(<ProductDetailsScreen />);
-    const touchables = container.findAll(
-      (node: any) => node?.type === 'View' && node?.props?.accessible === true && node?.props?.onPress
-    );
-    expect(touchables.length).toBeGreaterThanOrEqual(1);
-    fireEvent.press(touchables[0]);
+    const { getByTestId } = render(<ProductDetailsScreen />);
+    const backIcon = getByTestId('icon-chevron-left');
+    const backBtn = backIcon.parent;
+    fireEvent.press(backBtn);
     expect(mockGoBack).toHaveBeenCalled();
   });
 

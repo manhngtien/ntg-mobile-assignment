@@ -9,23 +9,19 @@ import { useGetProductById } from '../features/product/hooks/use-get-product-by-
 import { atoms } from '../styles/atoms';
 import { theme } from '../styles/theme';
 import { RootStackParamList } from '../types/app-navigation';
+import { IconName } from '../types/react-native-vector-icon';
 
-const features = [
-  { label: 'Heart Rate', value: '72 bpm' },
-  { label: 'Bluetooth', value: '5.2' },
-  { label: 'Waterproof', value: 'Yes' },
-  { label: 'Battery', value: '18 hrs' },
-];
+type FeatureIcon = {
+  label: string;
+  icon: IconName;
+  value: string;
+};
 
-const reviews = [
-  {
-    name: 'John Doe',
-    comment: 'Amazing watch with long battery life.',
-  },
-  {
-    name: 'Jane Smith',
-    comment: 'The sound quality is excellent and fits perfectly.',
-  },
+const features: FeatureIcon[] = [
+  { label: 'Heart Rate', icon: 'heart-pulse', value: '72 bpm' },
+  { label: 'Bluetooth', icon: 'sync', value: '5.2' },
+  { label: 'Waterproof', icon: 'droplet', value: 'Yes' },
+  { label: 'Battery', icon: 'battery-full', value: '18 hrs' },
 ];
 
 export const ProductDetailsScreen = () => {
@@ -146,7 +142,8 @@ export const ProductDetailsScreen = () => {
               <Text style={[atoms.font_bold, atoms.text_lg]}>Key Features</Text>
               <View style={[atoms.flex_row, atoms.flex_wrap]}>
                 {features.map((item, index) => (
-                  <YStack
+                  <XStack
+                    gap={12}
                     key={index}
                     style={[
                       atoms.mt_4,
@@ -161,11 +158,32 @@ export const ProductDetailsScreen = () => {
                       },
                     ]}
                   >
-                    <Text style={[atoms.text_xs, { color: theme.colors.gray_500 }]}>
-                      {item.label}
-                    </Text>
-                    <Text style={[atoms.font_bold]}>{item.value}</Text>
-                  </YStack>
+                    <View
+                      style={[
+                        atoms.h_10,
+                        atoms.w_10,
+                        atoms.justify_center,
+                        atoms.items_center,
+                        atoms.rounded_lg,
+                        { backgroundColor: theme.colors.cyan_200_20 },
+                      ]}
+                    >
+                      <Text>
+                        <FontAwesomeFreeSolid
+                          name={item.icon}
+                          size={20}
+                          color={theme.colors.cyan}
+                        />
+                      </Text>
+                    </View>
+
+                    <YStack>
+                      <Text style={[atoms.text_xs, { color: theme.colors.gray_500 }]}>
+                        {item.label}
+                      </Text>
+                      <Text style={[atoms.font_bold]}>{item.value}</Text>
+                    </YStack>
+                  </XStack>
                 ))}
               </View>
             </YStack>
