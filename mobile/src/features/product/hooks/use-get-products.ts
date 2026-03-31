@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
-import { selectProducts, selectProductsLoading, selectProductsError } from '../product-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { selectProducts, selectProductsError, selectProductsLoading } from '../product-slice';
 import { fetchProducts } from '../product-thunk';
 
 export const useGetProducts = () => {
@@ -10,9 +10,12 @@ export const useGetProducts = () => {
   const error = useAppSelector(selectProductsError);
   const categories = useMemo(() => products.map((product) => product.category), [products]);
 
-  const getProducts = useCallback((category: string) => {
-    dispatch(fetchProducts({ category }));
-  }, [dispatch]);
+  const getProducts = useCallback(
+    (category: string) => {
+      dispatch(fetchProducts({ category }));
+    },
+    [dispatch],
+  );
 
   return { products, categories, loading, error, getProducts };
 };

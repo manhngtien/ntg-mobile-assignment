@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react-native';
-import { useLogin } from './use-login';
+import { act, renderHook } from '@testing-library/react-native';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { loginUser, logoutUser } from '../auth-thunk';
+import { useLogin } from './use-login';
 
 jest.mock('../../../redux/store', () => ({
   useAppDispatch: jest.fn(),
@@ -26,10 +26,12 @@ describe('useLogin', () => {
     mockDispatch.mockReturnValue({ unwrap: jest.fn() });
   });
 
-  const setupSelector = (overrides: {
-    user?: any;
-    loading?: boolean;
-  } = {}) => {
+  const setupSelector = (
+    overrides: {
+      user?: any;
+      loading?: boolean;
+    } = {},
+  ) => {
     const user = overrides.user ?? null;
     const loading = overrides.loading ?? false;
 

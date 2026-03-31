@@ -1,5 +1,5 @@
+import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -14,15 +14,30 @@ jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => 'FontAwesom
 jest.mock('../styles/theme', () => ({
   theme: {
     colors: {
-      dark_100: '#1F2937', dark_200: '#111827', dark_300: '#0F172A',
-      gray_50: '#F3F4F6', gray_100: '#F9FAFB', gray_200: '#D1D5DB',
-      gray_300: '#E5E7EB', gray_400: '#9CA3AF', gray_500: '#6B7280',
-      gray_600: '#4B5563', gray_700: '#374151',
-      white: '#FFFFFF', white_80: '#FFFFFF80', black: '#000000',
-      cyan: '#06B6D4', cyan_50: '#ECFEFF', cyan_100: '#0DF2F21A', cyan_200_20: '#06B6D420',
-      teal: '#14B8A6', transparent: 'transparent',
-      slate_100: '#F1F5F9', slate_400: '#94A3B8',
-      red_50: '#FEF2F2', red_500: '#EF4444',
+      dark_100: '#1F2937',
+      dark_200: '#111827',
+      dark_300: '#0F172A',
+      gray_50: '#F3F4F6',
+      gray_100: '#F9FAFB',
+      gray_200: '#D1D5DB',
+      gray_300: '#E5E7EB',
+      gray_400: '#9CA3AF',
+      gray_500: '#6B7280',
+      gray_600: '#4B5563',
+      gray_700: '#374151',
+      white: '#FFFFFF',
+      white_80: '#FFFFFF80',
+      black: '#000000',
+      cyan: '#06B6D4',
+      cyan_50: '#ECFEFF',
+      cyan_100: '#0DF2F21A',
+      cyan_200_20: '#06B6D420',
+      teal: '#14B8A6',
+      transparent: 'transparent',
+      slate_100: '#F1F5F9',
+      slate_400: '#94A3B8',
+      red_50: '#FEF2F2',
+      red_500: '#EF4444',
     },
   },
 }));
@@ -56,13 +71,17 @@ jest.mock('@react-navigation/bottom-tabs', () => {
     createBottomTabNavigator: () => {
       const Navigator = ({ children, ...props }: any) => {
         const screens = React.Children.toArray(children);
-        return React.createElement(React.Fragment, null, ...screens.map((s: any) => {
-          if (s && s.props && s.props.component) {
-            const Comp = s.props.component;
-            return React.createElement(Comp, { key: s.props.name, navigation: {} });
-          }
-          return s;
-        }));
+        return React.createElement(
+          React.Fragment,
+          null,
+          ...screens.map((s: any) => {
+            if (s && s.props && s.props.component) {
+              const Comp = s.props.component;
+              return React.createElement(Comp, { key: s.props.name, navigation: {} });
+            }
+            return s;
+          }),
+        );
       };
       const Screen = ({ children }: any) => children || null;
       return { Navigator, Screen };
@@ -70,8 +89,8 @@ jest.mock('@react-navigation/bottom-tabs', () => {
   };
 });
 
-import { useLogin } from '../features/auth/hooks/use-login';
 import { useAuth } from '../features/auth/hooks/use-auth';
+import { useLogin } from '../features/auth/hooks/use-login';
 import { ProfileScreen } from '../screens/profile-screen';
 
 const mockUseLogin = useLogin as jest.MockedFunction<typeof useLogin>;
@@ -82,9 +101,15 @@ describe('ProfileScreen', () => {
     jest.clearAllMocks();
     mockUseAuth.mockReturnValue({
       user: {
-        id: 1, username: 'testuser', email: 'test@test.com', age: 25,
-        role: 'user', firstName: 'John', lastName: 'Doe',
-        createdAt: '', updatedAt: '',
+        id: 1,
+        username: 'testuser',
+        email: 'test@test.com',
+        age: 25,
+        role: 'user',
+        firstName: 'John',
+        lastName: 'Doe',
+        createdAt: '',
+        updatedAt: '',
       },
       loading: false,
       isAuthenticated: true,
@@ -142,8 +167,21 @@ describe('ProfileScreen', () => {
 
   it('should render N/A when age is falsy', () => {
     mockUseAuth.mockReturnValue({
-      user: { id: 1, username: 'testuser', email: 'test@test.com', age: 0, role: 'user', firstName: 'J', lastName: 'D', createdAt: '', updatedAt: '' },
-      loading: false, isAuthenticated: true, fetchAuthUser: jest.fn(), error: null,
+      user: {
+        id: 1,
+        username: 'testuser',
+        email: 'test@test.com',
+        age: 0,
+        role: 'user',
+        firstName: 'J',
+        lastName: 'D',
+        createdAt: '',
+        updatedAt: '',
+      },
+      loading: false,
+      isAuthenticated: true,
+      fetchAuthUser: jest.fn(),
+      error: null,
     });
     const { getByText } = render(<ProfileScreen navigation={{ navigate: jest.fn() }} />);
     expect(getByText('N/A')).toBeTruthy();
@@ -182,7 +220,11 @@ describe('ProfileScreen', () => {
 
   it('should render with null user', () => {
     mockUseAuth.mockReturnValue({
-      user: null, loading: false, isAuthenticated: false, fetchAuthUser: jest.fn(), error: null,
+      user: null,
+      loading: false,
+      isAuthenticated: false,
+      fetchAuthUser: jest.fn(),
+      error: null,
     });
     const { getByText } = render(<ProfileScreen navigation={{ navigate: jest.fn() }} />);
     expect(getByText('Profile Settings')).toBeTruthy();
@@ -191,7 +233,10 @@ describe('ProfileScreen', () => {
   it('should call logout on Logout press', () => {
     const mockLogout = jest.fn();
     mockUseLogin.mockReturnValue({
-      user: null, loading: false, login: jest.fn(), logout: mockLogout,
+      user: null,
+      loading: false,
+      login: jest.fn(),
+      logout: mockLogout,
     });
     const { getByText } = render(<ProfileScreen navigation={{ navigate: jest.fn() }} />);
     fireEvent.press(getByText('Logout'));

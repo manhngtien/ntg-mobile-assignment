@@ -1,18 +1,17 @@
-import { StyleSheet } from "react-native";
-import { spacings } from "./spacings";
-import { flex } from "./flex";
-import { borders } from "./borders";
-import { sizings } from "./sizings";
-import { effects } from "./effects";
-import { fonts } from "./fonts";
+import { StyleSheet } from 'react-native';
+import { borders } from './borders';
+import { effects } from './effects';
+import { flex } from './flex';
+import { fonts } from './fonts';
+import { sizings } from './sizings';
+import { spacings } from './spacings';
 
-type IAtomGlobalStyles =
-  typeof sizings
-  & typeof spacings
-  & typeof flex
-  & typeof borders
-  & typeof effects
-  & typeof fonts;
+type IAtomGlobalStyles = typeof sizings &
+  typeof spacings &
+  typeof flex &
+  typeof borders &
+  typeof effects &
+  typeof fonts;
 
 export const atoms = StyleSheet.create<IAtomGlobalStyles>({
   ...sizings,
@@ -20,5 +19,5 @@ export const atoms = StyleSheet.create<IAtomGlobalStyles>({
   ...flex,
   ...borders,
   ...effects,
-  ...fonts
+  ...fonts,
 });

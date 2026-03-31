@@ -1,5 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react-native';
+import React from 'react';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -14,15 +14,30 @@ jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => 'FontAwesom
 jest.mock('../../styles/theme', () => ({
   theme: {
     colors: {
-      dark_100: '#1F2937', dark_200: '#111827', dark_300: '#0F172A',
-      gray_50: '#F3F4F6', gray_100: '#F9FAFB', gray_200: '#D1D5DB',
-      gray_300: '#E5E7EB', gray_400: '#9CA3AF', gray_500: '#6B7280',
-      gray_600: '#4B5563', gray_700: '#374151',
-      white: '#FFFFFF', white_80: '#FFFFFF80', black: '#000000',
-      cyan: '#06B6D4', cyan_50: '#ECFEFF', cyan_100: '#0DF2F21A', cyan_200_20: '#06B6D420',
-      teal: '#14B8A6', transparent: 'transparent',
-      slate_100: '#F1F5F9', slate_400: '#94A3B8',
-      red_50: '#FEF2F2', red_500: '#EF4444',
+      dark_100: '#1F2937',
+      dark_200: '#111827',
+      dark_300: '#0F172A',
+      gray_50: '#F3F4F6',
+      gray_100: '#F9FAFB',
+      gray_200: '#D1D5DB',
+      gray_300: '#E5E7EB',
+      gray_400: '#9CA3AF',
+      gray_500: '#6B7280',
+      gray_600: '#4B5563',
+      gray_700: '#374151',
+      white: '#FFFFFF',
+      white_80: '#FFFFFF80',
+      black: '#000000',
+      cyan: '#06B6D4',
+      cyan_50: '#ECFEFF',
+      cyan_100: '#0DF2F21A',
+      cyan_200_20: '#06B6D420',
+      teal: '#14B8A6',
+      transparent: 'transparent',
+      slate_100: '#F1F5F9',
+      slate_400: '#94A3B8',
+      red_50: '#FEF2F2',
+      red_500: '#EF4444',
     },
   },
 }));
@@ -69,13 +84,17 @@ jest.mock('@react-navigation/bottom-tabs', () => {
     createBottomTabNavigator: () => {
       const Navigator = ({ children, ...props }: any) => {
         const screens = React.Children.toArray(children);
-        return React.createElement(React.Fragment, null, ...screens.map((s: any) => {
-          if (s && s.props && s.props.component) {
-            const Comp = s.props.component;
-            return React.createElement(Comp, { key: s.props.name, navigation: {} });
-          }
-          return s;
-        }));
+        return React.createElement(
+          React.Fragment,
+          null,
+          ...screens.map((s: any) => {
+            if (s && s.props && s.props.component) {
+              const Comp = s.props.component;
+              return React.createElement(Comp, { key: s.props.name, navigation: {} });
+            }
+            return s;
+          }),
+        );
       };
       const Screen = ({ children }: any) => children || null;
       return { Navigator, Screen };
@@ -83,10 +102,10 @@ jest.mock('@react-navigation/bottom-tabs', () => {
   };
 });
 
-import { useGetProducts } from '../../features/product/hooks/use-get-products';
-import { useGetCategories } from '../../features/product/hooks/use-get-categories';
-import { useLogin } from '../../features/auth/hooks/use-login';
 import { useAuth } from '../../features/auth/hooks/use-auth';
+import { useLogin } from '../../features/auth/hooks/use-login';
+import { useGetCategories } from '../../features/product/hooks/use-get-categories';
+import { useGetProducts } from '../../features/product/hooks/use-get-products';
 
 const mockUseGetProducts = useGetProducts as jest.MockedFunction<typeof useGetProducts>;
 const mockUseGetCategories = useGetCategories as jest.MockedFunction<typeof useGetCategories>;

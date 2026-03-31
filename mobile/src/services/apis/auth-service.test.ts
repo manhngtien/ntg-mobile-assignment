@@ -5,8 +5,8 @@ jest.mock('react-native-config', () => ({
   API_BASE_URL: 'http://localhost:3000',
 }));
 
-import { authService } from './auth-service';
 import { secureStorageService } from '../secure-storage-service';
+import { authService } from './auth-service';
 
 const mockAxios = axios as jest.Mocked<typeof axios>;
 
@@ -17,7 +17,10 @@ describe('authService', () => {
     const mockResponse = { data: { status: true, data: { user: { id: 1 }, token: 'abc' } } };
     mockAxios.post.mockResolvedValue(mockResponse);
     const result = await authService.login({ username: 'test', password: '123' });
-    expect(mockAxios.post).toHaveBeenCalledWith('http://localhost:3000/login', { username: 'test', password: '123' });
+    expect(mockAxios.post).toHaveBeenCalledWith('http://localhost:3000/login', {
+      username: 'test',
+      password: '123',
+    });
     expect(result).toEqual(mockResponse.data);
   });
 
@@ -26,7 +29,9 @@ describe('authService', () => {
     const mockResponse = { data: { status: true, data: { id: 1, username: 'test' } } };
     mockAxios.get.mockResolvedValue(mockResponse);
     const result = await authService.getUser();
-    expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:3000/user', { headers: { Authorization: 'Bearer my-token' } });
+    expect(mockAxios.get).toHaveBeenCalledWith('http://localhost:3000/user', {
+      headers: { Authorization: 'Bearer my-token' },
+    });
     expect(result).toEqual(mockResponse.data);
   });
 });

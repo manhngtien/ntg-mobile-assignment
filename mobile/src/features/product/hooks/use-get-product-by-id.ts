@@ -1,6 +1,10 @@
 import { useCallback } from 'react';
-import { selectSelectedProduct, selectProductsLoading, selectProductsError } from '../product-slice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import {
+  selectProductsError,
+  selectProductsLoading,
+  selectSelectedProduct,
+} from '../product-slice';
 import { fetchProductById } from '../product-thunk';
 
 export const useGetProductById = () => {
@@ -9,9 +13,12 @@ export const useGetProductById = () => {
   const loading = useAppSelector(selectProductsLoading);
   const error = useAppSelector(selectProductsError);
 
-  const getProductById = useCallback((id: number) => {
-    dispatch(fetchProductById(id));
-  }, [dispatch]);
+  const getProductById = useCallback(
+    (id: number) => {
+      dispatch(fetchProductById(id));
+    },
+    [dispatch],
+  );
 
   return { selectedProduct, loading, error, getProductById };
 };

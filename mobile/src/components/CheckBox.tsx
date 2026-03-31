@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
-import { Pressable, View, StyleSheet } from 'react-native';
-import { theme } from '../styles/theme';
 import FontAwesomeFreeSolid from '@react-native-vector-icons/fontawesome-free-solid';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { atoms } from '../styles/atoms';
+import { theme } from '../styles/theme';
 
 export function CheckBox() {
   const [checked, setChecked] = useState(false);
 
   return (
     <Pressable onPress={() => setChecked(!checked)}>
-      <View style={[atoms.justify_center, atoms.items_center, styles.box, checked && styles.checked]}>
+      <View
+        style={[atoms.justify_center, atoms.items_center, styles.box, checked && styles.checked]}
+      >
         <FontAwesomeFreeSolid name="check" size={10} color={theme.colors.white} />
       </View>
     </Pressable>

@@ -1,5 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react-native';
+import React from 'react';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -15,7 +15,11 @@ jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => {
   return {
     __esModule: true,
     default: ({ name, color, size }: any) =>
-      React.createElement(Text, { testID: `icon-${name}-${color}`, style: { fontSize: size } }, name),
+      React.createElement(
+        Text,
+        { testID: `icon-${name}-${color}`, style: { fontSize: size } },
+        name,
+      ),
   };
 });
 

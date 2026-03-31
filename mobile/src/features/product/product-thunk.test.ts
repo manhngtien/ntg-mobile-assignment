@@ -1,5 +1,5 @@
-import { fetchProducts, fetchProductById } from './product-thunk';
 import { productService } from '../../services/apis/product-service';
+import { fetchProductById, fetchProducts } from './product-thunk';
 
 jest.mock('../../services/apis/product-service', () => ({
   productService: {
@@ -47,7 +47,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Electronics' });
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProducts).toHaveBeenCalledWith('Electronics');
       expect(result.payload).toEqual(mockProducts);
@@ -60,7 +60,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: '' });
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProducts).toHaveBeenCalledWith('');
     });
@@ -70,7 +70,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Electronics' });
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('product/fetchProducts/rejected');
       expect(result.payload).toBe('Failed to fetch products. Please try again.');
@@ -82,7 +82,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'NonExistent' });
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.payload).toEqual([]);
       expect(result.type).toBe('product/fetchProducts/fulfilled');
@@ -93,7 +93,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Electronics' });
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('product/fetchProducts/rejected');
       expect(result.payload).toBe('Failed to fetch products. Please try again.');
@@ -105,7 +105,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Electronics' });
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch.mock.calls[0][0].type).toBe('product/fetchProducts/pending');
@@ -117,7 +117,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Electronics' });
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch.mock.calls[0][0].type).toBe('product/fetchProducts/pending');
@@ -130,7 +130,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProducts({ category: 'Food & Beverage' });
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProducts).toHaveBeenCalledWith('Food & Beverage');
       expect(result.payload).toEqual(mockProducts);
@@ -144,7 +144,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(1);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProductById).toHaveBeenCalledWith(1);
       expect(result.payload).toEqual(mockProducts[0]);
@@ -156,7 +156,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(2);
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProductById).toHaveBeenCalledWith(2);
     });
@@ -166,7 +166,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(1);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('product/fetchProductById/rejected');
       expect(result.payload).toBe('Failed to fetch product. Please try again.');
@@ -177,7 +177,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(999);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.payload).toBeNull();
       expect(result.type).toBe('product/fetchProductById/fulfilled');
@@ -188,7 +188,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(1);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('product/fetchProductById/rejected');
       expect(result.payload).toBe('Failed to fetch product. Please try again.');
@@ -199,7 +199,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(1);
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch.mock.calls[0][0].type).toBe('product/fetchProductById/pending');
@@ -211,7 +211,7 @@ describe('productThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(1);
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch.mock.calls[0][0].type).toBe('product/fetchProductById/pending');
@@ -220,11 +220,14 @@ describe('productThunk', () => {
 
     it('should handle id of 0', async () => {
       const productWithZeroId = { ...mockProducts[0], id: 0 };
-      mockProductService.getProductById.mockResolvedValue({ status: true, data: productWithZeroId });
+      mockProductService.getProductById.mockResolvedValue({
+        status: true,
+        data: productWithZeroId,
+      });
 
       const dispatch = jest.fn();
       const thunk = fetchProductById(0);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockProductService.getProductById).toHaveBeenCalledWith(0);
       expect(result.payload).toEqual(productWithZeroId);

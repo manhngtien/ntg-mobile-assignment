@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { productService } from '../../services/apis/product-service';
 import { Product } from '../../models/product';
+import { productService } from '../../services/apis/product-service';
 
 export const fetchProducts = createAsyncThunk<Product[], { category: string }>(
   'product/fetchProducts',
@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk<Product[], { category: string }>(
     } catch (error: any) {
       return rejectWithValue('Failed to fetch products. Please try again.');
     }
-  }
+  },
 );
 
 export const fetchProductById = createAsyncThunk<Product | null, number>(
@@ -23,5 +23,5 @@ export const fetchProductById = createAsyncThunk<Product | null, number>(
     } catch (error: any) {
       return rejectWithValue('Failed to fetch product. Please try again.');
     }
-  }
+  },
 );

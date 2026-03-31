@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from 'react-native';
 
 type IFlexStyles = {
   flex_1: ViewStyle;
@@ -24,7 +24,7 @@ export const flex = StyleSheet.create<IFlexStyles>({
     flexDirection: 'column',
   },
   flex_wrap: {
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   justify_center: {
     justifyContent: 'center',

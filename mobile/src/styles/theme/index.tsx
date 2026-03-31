@@ -1,3 +1,3 @@
-import { lightTheme } from "./light";
+import { lightTheme } from './light';
 
 export const theme = lightTheme;

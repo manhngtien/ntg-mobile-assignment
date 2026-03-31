@@ -5,12 +5,7 @@ describe('useGetCategories', () => {
   it('should return an array of categories', () => {
     const { result } = renderHook(() => useGetCategories());
 
-    expect(result.current.categories).toEqual([
-      'Electronics',
-      'Home',
-      'Sport',
-      'Food & Beverage',
-    ]);
+    expect(result.current.categories).toEqual(['Electronics', 'Home', 'Sport', 'Food & Beverage']);
   });
 
   it('should return exactly 4 categories', () => {

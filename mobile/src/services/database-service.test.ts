@@ -31,7 +31,17 @@ describe('databaseService', () => {
     (open as jest.Mock).mockReturnValue(freshMockDb);
 
     const service = require('./database-service').databaseService;
-    const user = { id: 1, username: 'test', email: 'test@test.com', age: 25, role: 'user', firstName: 'T', lastName: 'U', createdAt: '', updatedAt: '' };
+    const user = {
+      id: 1,
+      username: 'test',
+      email: 'test@test.com',
+      age: 25,
+      role: 'user',
+      firstName: 'T',
+      lastName: 'U',
+      createdAt: '',
+      updatedAt: '',
+    };
     await service.saveUser(user);
     expect(freshMockDb.executeAsync).toHaveBeenCalled();
     expect(consoleSpy).toHaveBeenCalledWith('User saved successfully');
@@ -45,7 +55,17 @@ describe('databaseService', () => {
     (open as jest.Mock).mockReturnValue(freshMockDb);
 
     const service = require('./database-service').databaseService;
-    const user = { id: 1, username: 'test', email: 'test@test.com', age: 25, role: 'user', firstName: 'T', lastName: 'U', createdAt: '', updatedAt: '' };
+    const user = {
+      id: 1,
+      username: 'test',
+      email: 'test@test.com',
+      age: 25,
+      role: 'user',
+      firstName: 'T',
+      lastName: 'U',
+      createdAt: '',
+      updatedAt: '',
+    };
     await service.saveUser(user);
     await service.saveUser(user);
     expect(open).toHaveBeenCalledTimes(1);
@@ -101,7 +121,17 @@ describe('databaseService', () => {
     (open as jest.Mock).mockReturnValue(freshMockDb);
 
     const service = require('./database-service').databaseService;
-    const user = { id: 1, username: 'test', email: 'test@test.com', age: 25, role: 'user', firstName: 'T', lastName: 'U', createdAt: '', updatedAt: '' };
+    const user = {
+      id: 1,
+      username: 'test',
+      email: 'test@test.com',
+      age: 25,
+      role: 'user',
+      firstName: 'T',
+      lastName: 'U',
+      createdAt: '',
+      updatedAt: '',
+    };
     await expect(service.saveUser(user)).resolves.not.toThrow();
     expect(consoleSpy).toHaveBeenCalledWith('Error saving user:', expect.any(Error));
     consoleSpy.mockRestore();

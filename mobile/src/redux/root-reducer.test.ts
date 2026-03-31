@@ -81,14 +81,32 @@ describe('rootReducer', () => {
   });
 
   it('should handle fetchProducts.fulfilled action', () => {
-    const mockProducts = [{ id: 1, name: 'Product 1', description: '', image: '', price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: '' }];
-    const state = rootReducer(undefined, { type: 'product/fetchProducts/fulfilled', payload: mockProducts });
+    const mockProducts = [
+      {
+        id: 1,
+        name: 'Product 1',
+        description: '',
+        image: '',
+        price: 10,
+        priceUnit: 'USD',
+        createdAt: '',
+        updatedAt: '',
+        category: '',
+      },
+    ];
+    const state = rootReducer(undefined, {
+      type: 'product/fetchProducts/fulfilled',
+      payload: mockProducts,
+    });
     expect(state.product.loading).toBe(false);
     expect(state.product.products).toEqual(mockProducts);
   });
 
   it('should handle fetchProducts.rejected action', () => {
-    const state = rootReducer(undefined, { type: 'product/fetchProducts/rejected', payload: 'Error message' });
+    const state = rootReducer(undefined, {
+      type: 'product/fetchProducts/rejected',
+      payload: 'Error message',
+    });
     expect(state.product.loading).toBe(false);
     expect(state.product.error).toBe('Error message');
   });
@@ -101,14 +119,30 @@ describe('rootReducer', () => {
   });
 
   it('should handle fetchProductById.fulfilled action', () => {
-    const mockProduct = { id: 1, name: 'Product 1', description: '', image: '', price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: '' };
-    const state = rootReducer(undefined, { type: 'product/fetchProductById/fulfilled', payload: mockProduct });
+    const mockProduct = {
+      id: 1,
+      name: 'Product 1',
+      description: '',
+      image: '',
+      price: 10,
+      priceUnit: 'USD',
+      createdAt: '',
+      updatedAt: '',
+      category: '',
+    };
+    const state = rootReducer(undefined, {
+      type: 'product/fetchProductById/fulfilled',
+      payload: mockProduct,
+    });
     expect(state.product.loading).toBe(false);
     expect(state.product.selectedProduct).toEqual(mockProduct);
   });
 
   it('should handle fetchProductById.rejected action', () => {
-    const state = rootReducer(undefined, { type: 'product/fetchProductById/rejected', payload: 'Error message' });
+    const state = rootReducer(undefined, {
+      type: 'product/fetchProductById/rejected',
+      payload: 'Error message',
+    });
     expect(state.product.loading).toBe(false);
     expect(state.product.error).toBe('Error message');
   });

@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import { User } from '../../models/user';
 
 export interface AuthResponse {
   status: boolean;
@@ -7,7 +7,7 @@ export interface AuthResponse {
 
 export interface LoginRequest {
   username: string;
-  password: string
+  password: string;
 }
 
 export interface LoginResponse {

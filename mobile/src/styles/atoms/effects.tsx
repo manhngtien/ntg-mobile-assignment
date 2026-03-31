@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from 'react-native';
 
 type IEffects = {
   shadow_xs: ViewStyle;

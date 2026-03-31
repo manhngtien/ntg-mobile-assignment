@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToastAndroid } from 'react-native';
 import { Product } from '../../models/product';
-import { fetchProducts, fetchProductById } from './product-thunk';
+import { fetchProductById, fetchProducts } from './product-thunk';
 
 interface ProductState {
   products: Product[];
@@ -14,7 +14,7 @@ const initialState: ProductState = {
   products: [],
   selectedProduct: null,
   loading: false,
-  error: null
+  error: null,
 };
 
 export const productSlice = createSlice({
@@ -50,12 +50,13 @@ export const productSlice = createSlice({
         state.error = action.payload as string;
         ToastAndroid.show('Failed to fetch product. Please try again.', ToastAndroid.LONG);
       });
-  }
+  },
 });
 
 // Selectors
 export const selectProducts = (state: { product: ProductState }) => state.product.products;
-export const selectSelectedProduct = (state: { product: ProductState }) => state.product.selectedProduct;
+export const selectSelectedProduct = (state: { product: ProductState }) =>
+  state.product.selectedProduct;
 export const selectProductsLoading = (state: { product: ProductState }) => state.product.loading;
 export const selectProductsError = (state: { product: ProductState }) => state.product.error;
 

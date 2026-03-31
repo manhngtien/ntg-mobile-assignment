@@ -45,10 +45,18 @@ jest.mock('redux-logger', () => {
 
 jest.mock('react-redux', () => ({
   useDispatch: jest.fn(() => jest.fn()),
-  useSelector: jest.fn((selector: any) => selector({
-    auth: { user: null, loading: false, isAuthenticated: null, isLoginSuccess: null, error: null },
-    product: { products: [], selectedProduct: null, loading: false, error: null },
-  })),
+  useSelector: jest.fn((selector: any) =>
+    selector({
+      auth: {
+        user: null,
+        loading: false,
+        isAuthenticated: null,
+        isLoginSuccess: null,
+        error: null,
+      },
+      product: { products: [], selectedProduct: null, loading: false, error: null },
+    }),
+  ),
   TypedUseSelectorHook: jest.fn(),
 }));
 

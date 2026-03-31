@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle } from "react-native";
+import { StyleSheet, TextStyle } from 'react-native';
 
 type IFontStyles = {
   text_xs2: TextStyle;

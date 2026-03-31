@@ -1,7 +1,7 @@
-import { renderHook, act } from '@testing-library/react-native';
-import { useGetProductById } from './use-get-product-by-id';
+import { act, renderHook } from '@testing-library/react-native';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { fetchProductById } from '../product-thunk';
+import { useGetProductById } from './use-get-product-by-id';
 
 jest.mock('../../../redux/store', () => ({
   useAppDispatch: jest.fn(),
@@ -36,11 +36,13 @@ describe('useGetProductById', () => {
     mockDispatch.mockReturnValue({ unwrap: jest.fn() });
   });
 
-  const setupSelector = (overrides: {
-    selectedProduct?: typeof mockProduct | null;
-    loading?: boolean;
-    error?: string | null;
-  } = {}) => {
+  const setupSelector = (
+    overrides: {
+      selectedProduct?: typeof mockProduct | null;
+      loading?: boolean;
+      error?: string | null;
+    } = {},
+  ) => {
     const selectedProduct = overrides.selectedProduct ?? null;
     const loading = overrides.loading ?? false;
     const error = overrides.error ?? null;

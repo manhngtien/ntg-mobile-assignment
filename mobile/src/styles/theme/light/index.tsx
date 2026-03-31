@@ -1,5 +1,5 @@
-import { colors } from "./colors";
+import { colors } from './colors';
 
 export const lightTheme = {
-  colors
-}
+  colors,
+};

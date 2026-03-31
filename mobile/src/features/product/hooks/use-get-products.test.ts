@@ -1,8 +1,8 @@
-import { renderHook, act } from '@testing-library/react-native';
-import { useGetProducts } from './use-get-products';
+import { act, renderHook } from '@testing-library/react-native';
+import { sampleProducts } from '../../../models/product';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { fetchProducts } from '../product-thunk';
-import { sampleProducts } from '../../../models/product';
+import { useGetProducts } from './use-get-products';
 
 jest.mock('../../../redux/store', () => ({
   useAppDispatch: jest.fn(),
@@ -25,11 +25,13 @@ describe('useGetProducts', () => {
     mockDispatch.mockReturnValue({ unwrap: jest.fn() });
   });
 
-  const setupSelector = (overrides: {
-    products?: typeof sampleProducts;
-    loading?: boolean;
-    error?: string | null;
-  } = {}) => {
+  const setupSelector = (
+    overrides: {
+      products?: typeof sampleProducts;
+      loading?: boolean;
+      error?: string | null;
+    } = {},
+  ) => {
     const products = overrides.products ?? sampleProducts;
     const loading = overrides.loading ?? false;
     const error = overrides.error ?? null;
@@ -67,11 +69,7 @@ describe('useGetProducts', () => {
     setupSelector();
     const { result } = renderHook(() => useGetProducts());
 
-    expect(result.current.categories).toEqual([
-      'Electronics',
-      'Food & Beverage',
-      'Electronics',
-    ]);
+    expect(result.current.categories).toEqual(['Electronics', 'Food & Beverage', 'Electronics']);
   });
 
   it('should return empty arrays when there are no products', () => {

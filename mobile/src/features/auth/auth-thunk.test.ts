@@ -1,7 +1,7 @@
-import { loginUser, logoutUser, initializeAuth } from './auth-thunk';
 import { authService } from '../../services/apis/auth-service';
-import { secureStorageService } from '../../services/secure-storage-service';
 import { databaseService } from '../../services/database-service';
+import { secureStorageService } from '../../services/secure-storage-service';
+import { initializeAuth, loginUser, logoutUser } from './auth-thunk';
 
 jest.mock('../../services/apis/auth-service', () => ({
   authService: {
@@ -54,7 +54,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = loginUser(credentials);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockAuthService.login).toHaveBeenCalledWith(credentials);
       expect(mockSecureStorage.saveToken).toHaveBeenCalledWith('test-token');
@@ -69,7 +69,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = loginUser(credentials);
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(mockSecureStorage.saveToken).not.toHaveBeenCalled();
       expect(mockDatabaseService.saveUser).toHaveBeenCalledWith(mockUser);
@@ -81,7 +81,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = loginUser(credentials);
-      await thunk(dispatch, () => { }, undefined);
+      await thunk(dispatch, () => {}, undefined);
 
       expect(mockSecureStorage.saveToken).toHaveBeenCalledWith('test-token');
       expect(mockDatabaseService.saveUser).not.toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = loginUser(credentials);
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('auth/loginUser/rejected');
       expect(result.payload).toBe('Login failed. Please try again.');
@@ -105,7 +105,7 @@ describe('authThunk', () => {
     it('should remove token and delete user on logout', async () => {
       const dispatch = jest.fn();
       const thunk = logoutUser();
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockSecureStorage.removeToken).toHaveBeenCalled();
       expect(mockDatabaseService.deleteUser).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = logoutUser();
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(result.type).toBe('auth/logoutUser/rejected');
     });
@@ -129,7 +129,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = initializeAuth();
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockAuthService.getUser).toHaveBeenCalled();
       expect(mockDatabaseService.saveUser).toHaveBeenCalledWith(mockUser);
@@ -142,7 +142,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = initializeAuth();
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockDatabaseService.saveUser).not.toHaveBeenCalled();
       expect(result.payload).toBeNull();
@@ -155,7 +155,7 @@ describe('authThunk', () => {
 
       const dispatch = jest.fn();
       const thunk = initializeAuth();
-      const result = await thunk(dispatch, () => { }, undefined);
+      const result = await thunk(dispatch, () => {}, undefined);
 
       expect(mockSecureStorage.removeToken).toHaveBeenCalled();
       expect(result.type).toBe('auth/initializeAuth/fulfilled');

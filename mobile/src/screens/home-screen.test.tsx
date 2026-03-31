@@ -1,5 +1,5 @@
+import { fireEvent, render } from '@testing-library/react-native';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
 
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
@@ -14,15 +14,30 @@ jest.mock('@react-native-vector-icons/fontawesome-free-solid', () => 'FontAwesom
 jest.mock('../styles/theme', () => ({
   theme: {
     colors: {
-      dark_100: '#1F2937', dark_200: '#111827', dark_300: '#0F172A',
-      gray_50: '#F3F4F6', gray_100: '#F9FAFB', gray_200: '#D1D5DB',
-      gray_300: '#E5E7EB', gray_400: '#9CA3AF', gray_500: '#6B7280',
-      gray_600: '#4B5563', gray_700: '#374151',
-      white: '#FFFFFF', white_80: '#FFFFFF80', black: '#000000',
-      cyan: '#06B6D4', cyan_50: '#ECFEFF', cyan_100: '#0DF2F21A', cyan_200_20: '#06B6D420',
-      teal: '#14B8A6', transparent: 'transparent',
-      slate_100: '#F1F5F9', slate_400: '#94A3B8',
-      red_50: '#FEF2F2', red_500: '#EF4444',
+      dark_100: '#1F2937',
+      dark_200: '#111827',
+      dark_300: '#0F172A',
+      gray_50: '#F3F4F6',
+      gray_100: '#F9FAFB',
+      gray_200: '#D1D5DB',
+      gray_300: '#E5E7EB',
+      gray_400: '#9CA3AF',
+      gray_500: '#6B7280',
+      gray_600: '#4B5563',
+      gray_700: '#374151',
+      white: '#FFFFFF',
+      white_80: '#FFFFFF80',
+      black: '#000000',
+      cyan: '#06B6D4',
+      cyan_50: '#ECFEFF',
+      cyan_100: '#0DF2F21A',
+      cyan_200_20: '#06B6D420',
+      teal: '#14B8A6',
+      transparent: 'transparent',
+      slate_100: '#F1F5F9',
+      slate_400: '#94A3B8',
+      red_50: '#FEF2F2',
+      red_500: '#EF4444',
     },
   },
 }));
@@ -47,11 +62,12 @@ jest.mock('../components/ProductCard', () => {
   const React = require('react');
   const { Text, TouchableOpacity } = require('react-native');
   return {
-    ProductCard: ({ item }: any) => (
-      React.createElement(TouchableOpacity, { testID: `product-card-${item.id}` },
-        React.createElement(Text, null, item.name)
-      )
-    ),
+    ProductCard: ({ item }: any) =>
+      React.createElement(
+        TouchableOpacity,
+        { testID: `product-card-${item.id}` },
+        React.createElement(Text, null, item.name),
+      ),
   };
 });
 
@@ -59,7 +75,8 @@ jest.mock('../components/Background', () => {
   const React = require('react');
   const { View } = require('react-native');
   return {
-    Background: ({ children }: any) => React.createElement(View, { testID: 'background' }, children),
+    Background: ({ children }: any) =>
+      React.createElement(View, { testID: 'background' }, children),
   };
 });
 
@@ -67,24 +84,27 @@ jest.mock('../components/FilterChipList', () => {
   const React = require('react');
   const { View, Text, TouchableOpacity } = require('react-native');
   return {
-    FilterChipList: ({ filterChips, handleChipPress }: any) => (
-      React.createElement(View, { testID: 'filter-chip-list' },
+    FilterChipList: ({ filterChips, handleChipPress }: any) =>
+      React.createElement(
+        View,
+        { testID: 'filter-chip-list' },
         filterChips.map((chip: string) =>
-          React.createElement(TouchableOpacity, {
-            key: chip,
-            testID: `filter-chip-${chip}`,
-            onPress: () => handleChipPress(chip),
-          },
-            React.createElement(Text, null, chip)
-          )
-        )
-      )
-    ),
+          React.createElement(
+            TouchableOpacity,
+            {
+              key: chip,
+              testID: `filter-chip-${chip}`,
+              onPress: () => handleChipPress(chip),
+            },
+            React.createElement(Text, null, chip),
+          ),
+        ),
+      ),
   };
 });
 
-import { useGetProducts } from '../features/product/hooks/use-get-products';
 import { useGetCategories } from '../features/product/hooks/use-get-categories';
+import { useGetProducts } from '../features/product/hooks/use-get-products';
 import { HomeScreen } from '../screens/home-screen';
 
 const mockUseGetProducts = useGetProducts as jest.MockedFunction<typeof useGetProducts>;
@@ -92,8 +112,15 @@ const mockUseGetCategories = useGetCategories as jest.MockedFunction<typeof useG
 
 const mockProducts = [
   {
-    id: 1, name: 'Product 1', description: 'Desc', image: 'https://img.jpg',
-    price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat1',
+    id: 1,
+    name: 'Product 1',
+    description: 'Desc',
+    image: 'https://img.jpg',
+    price: 10,
+    priceUnit: 'USD',
+    createdAt: '',
+    updatedAt: '',
+    category: 'Cat1',
   },
 ];
 
@@ -110,7 +137,7 @@ describe('HomeScreen', () => {
       categories: ['Cat1'],
     });
     mockUseGetCategories.mockReturnValue({
-      categories: ['Cat1', 'Cat2']
+      categories: ['Cat1', 'Cat2'],
     });
   });
 
@@ -162,8 +189,28 @@ describe('HomeScreen', () => {
   it('should render product with multiple items', () => {
     mockUseGetProducts.mockReturnValue({
       products: [
-        { id: 1, name: 'Prod A', description: '', image: '', price: 5, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
-        { id: 2, name: 'Prod B', description: '', image: '', price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
+        {
+          id: 1,
+          name: 'Prod A',
+          description: '',
+          image: '',
+          price: 5,
+          priceUnit: 'USD',
+          createdAt: '',
+          updatedAt: '',
+          category: 'Cat',
+        },
+        {
+          id: 2,
+          name: 'Prod B',
+          description: '',
+          image: '',
+          price: 10,
+          priceUnit: 'USD',
+          createdAt: '',
+          updatedAt: '',
+          category: 'Cat',
+        },
       ],
       loading: false,
       error: null,
@@ -201,8 +248,28 @@ describe('HomeScreen', () => {
   it('should render ProductCard for each product', () => {
     mockUseGetProducts.mockReturnValue({
       products: [
-        { id: 1, name: 'Prod A', description: '', image: '', price: 5, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
-        { id: 2, name: 'Prod B', description: '', image: '', price: 10, priceUnit: 'USD', createdAt: '', updatedAt: '', category: 'Cat' },
+        {
+          id: 1,
+          name: 'Prod A',
+          description: '',
+          image: '',
+          price: 5,
+          priceUnit: 'USD',
+          createdAt: '',
+          updatedAt: '',
+          category: 'Cat',
+        },
+        {
+          id: 2,
+          name: 'Prod B',
+          description: '',
+          image: '',
+          price: 10,
+          priceUnit: 'USD',
+          createdAt: '',
+          updatedAt: '',
+          category: 'Cat',
+        },
       ],
       loading: false,
       error: null,

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LoginResponse } from './types';
 import { User } from '../../models/user';
-import { loginUser, initializeAuth, logoutUser } from './auth-thunk';
+import { initializeAuth, loginUser, logoutUser } from './auth-thunk';
+import { LoginResponse } from './types';
 
 interface AuthState {
   user: User | null;
@@ -65,7 +65,7 @@ export const authSlice = createSlice({
         state.isAuthenticated = null;
         state.isLoginSuccess = null;
       });
-  }
+  },
 });
 
 // Selectors

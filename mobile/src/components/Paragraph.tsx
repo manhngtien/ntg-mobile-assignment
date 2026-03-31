@@ -2,18 +2,18 @@ import React from 'react';
 import { StyleSheet, Text, TextStyle } from 'react-native';
 
 export function Paragraph() {
-    return <Text style={styles.text} />;
+  return <Text style={styles.text} />;
 }
 
 type IParagraphStyles = {
-    text: TextStyle;
+  text: TextStyle;
 };
 
 const styles = StyleSheet.create<IParagraphStyles>({
-    text: {
-        fontSize: 15,
-        lineHeight: 21,
-        textAlign: 'center',
-        marginBottom: 12,
-    },
+  text: {
+    fontSize: 15,
+    lineHeight: 21,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
 });

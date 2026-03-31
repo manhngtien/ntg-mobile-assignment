@@ -1,18 +1,15 @@
 import * as React from 'react';
-import { atoms } from '../styles/atoms';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
 import { XStack } from '../components/XStack';
+import { atoms } from '../styles/atoms';
 import { theme } from '../styles/theme';
 
 interface FilterChipListProps {
   filterChips: string[];
-  handleChipPress: (category: string) => void
+  handleChipPress: (category: string) => void;
 }
 
-export function FilterChipList({
-  filterChips,
-  handleChipPress
-}: FilterChipListProps) {
+export function FilterChipList({ filterChips, handleChipPress }: FilterChipListProps) {
   const [selectedChip, setSelectedChip] = React.useState('');
 
   return (
@@ -22,7 +19,7 @@ export function FilterChipList({
         style={[
           atoms.pb_3,
           atoms.px_4,
-          { borderBottomWidth: 2, borderBottomColor: theme.colors.gray_50 }
+          { borderBottomWidth: 2, borderBottomColor: theme.colors.gray_50 },
         ]}
       >
         {filterChips.map((item) => (
@@ -33,17 +30,16 @@ export function FilterChipList({
               atoms.px_4,
               atoms.py_2,
               {
-                backgroundColor: item === selectedChip ? theme.colors.teal : theme.colors.gray_100
-              }
+                backgroundColor: item === selectedChip ? theme.colors.teal : theme.colors.gray_100,
+              },
             ]}
             onPress={() => {
               if (item === selectedChip) {
-                setSelectedChip('')
-                handleChipPress('')
-              }
-              else {
-                setSelectedChip(item)
-                handleChipPress(item)
+                setSelectedChip('');
+                handleChipPress('');
+              } else {
+                setSelectedChip(item);
+                handleChipPress(item);
               }
             }}
           >
@@ -53,7 +49,7 @@ export function FilterChipList({
                 item === selectedChip ? atoms.font_semibold : atoms.font_medium,
                 {
                   color: item === selectedChip ? theme.colors.dark_200 : theme.colors.gray_600,
-                }
+                },
               ]}
             >
               {item}
@@ -63,4 +59,4 @@ export function FilterChipList({
       </XStack>
     </ScrollView>
   );
-};
+}

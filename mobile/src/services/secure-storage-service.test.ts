@@ -6,8 +6,8 @@ jest.mock('react-native-keychain', () => ({
   ACCESSIBLE: { WHEN_UNLOCKED_THIS_DEVICE_ONLY: 'whenUnlockedThisDeviceOnly' },
 }));
 
-import { secureStorageService } from './secure-storage-service';
 import * as Keychain from 'react-native-keychain';
+import { secureStorageService } from './secure-storage-service';
 
 const mockKeychain = Keychain as jest.Mocked<typeof Keychain>;
 
@@ -19,9 +19,13 @@ describe('secureStorageService', () => {
       (mockKeychain.setGenericPassword as jest.Mock).mockResolvedValue(true);
       const result = await secureStorageService.saveToken('my-token');
       expect(result).toBe(true);
-      expect(mockKeychain.setGenericPassword).toHaveBeenCalledWith('auth_token', 'my-token', expect.objectContaining({
-        service: 'auth_token',
-      }));
+      expect(mockKeychain.setGenericPassword).toHaveBeenCalledWith(
+        'auth_token',
+        'my-token',
+        expect.objectContaining({
+          service: 'auth_token',
+        }),
+      );
     });
 
     it('should return false on error', async () => {
@@ -29,14 +33,20 @@ describe('secureStorageService', () => {
       (mockKeychain.setGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.saveToken('my-token');
       expect(result).toBe(false);
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to save token to keychain:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to save token to keychain:',
+        expect.any(Error),
+      );
       consoleSpy.mockRestore();
     });
   });
 
   describe('loadToken', () => {
     it('should return token when credentials exist', async () => {
-      (mockKeychain.getGenericPassword as jest.Mock).mockResolvedValue({ username: 'auth_token', password: 'the-token' });
+      (mockKeychain.getGenericPassword as jest.Mock).mockResolvedValue({
+        username: 'auth_token',
+        password: 'the-token',
+      });
       const result = await secureStorageService.loadToken();
       expect(result).toBe('the-token');
     });
@@ -52,7 +62,10 @@ describe('secureStorageService', () => {
       (mockKeychain.getGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.loadToken();
       expect(result).toBeNull();
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to load token from keychain:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to load token from keychain:',
+        expect.any(Error),
+      );
       consoleSpy.mockRestore();
     });
   });
@@ -69,7 +82,10 @@ describe('secureStorageService', () => {
       (mockKeychain.resetGenericPassword as jest.Mock).mockRejectedValue(new Error('fail'));
       const result = await secureStorageService.removeToken();
       expect(result).toBe(false);
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to remove token from keychain:', expect.any(Error));
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Failed to remove token from keychain:',
+        expect.any(Error),
+      );
       consoleSpy.mockRestore();
     });
   });

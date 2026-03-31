@@ -27,12 +27,12 @@ jest.mock('./auth-thunk', () => ({
 }));
 
 import authReducer, {
-  selectUser,
-  selectLoading,
   selectIsAuthenticated,
   selectIsLoginSuccess,
+  selectLoading,
+  selectUser,
 } from './auth-slice';
-import { loginUser, initializeAuth, logoutUser } from './auth-thunk';
+import { initializeAuth, loginUser, logoutUser } from './auth-thunk';
 
 const mockUser = {
   id: 1,
@@ -102,7 +102,10 @@ describe('authSlice', () => {
     });
 
     it('should set user, isAuthenticated and isLoginSuccess on fulfilled', () => {
-      const state = authReducer(initialState, loginUser.fulfilled(mockLoginPayload, '', credentials));
+      const state = authReducer(
+        initialState,
+        loginUser.fulfilled(mockLoginPayload, '', credentials),
+      );
       expect(state.loading).toBe(false);
       expect(state.user).toEqual(mockUser);
       expect(state.isAuthenticated).toBe(true);
